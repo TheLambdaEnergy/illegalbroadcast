@@ -1,0 +1,8 @@
+homepage status=200 bytes=3073
+scripts found: 0
+
+==========================================================================================
+ENDPOINT / PATH STRINGS ACROSS ALL BUNDLES
+==========================================================================================
+
+ALL STRING LITERALS CONTAINING "/api" (raw context)

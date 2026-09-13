@@ -1,0 +1,72 @@
+chunks crawled: 18
+
+====================================================================================================
+URL / PATH LITERALS
+====================================================================================================
+   /${Ite}/planet/${e}
+   /__data.json
+   /api/hell-divers-2-api/get-api-data-${t}
+   /api/steam-api/news
+   /effects/planetPixels.png
+   /effects/planetPixels2.png
+   /gen/planet/planet_unknown.webp
+   /news/planetbg1.webp
+   /news/planetbg2.webp
+   /planets/${e}
+   https://cdn.helldiverscompanion.com/live
+   https://cdn.helldiverscompanion.com/live/globalResources/recent.json
+   https://cdn.helldiverscompanion.com/live/planetEvents/2days.json
+   https://cdn.helldiverscompanion.com/live/planetRegions/recent.json
+   https://cdn.helldiverscompanion.com/live/planets/${e.index}/recent.json
+   https://discord.gg/helldivers
+   https://github.com/helldivers-2/diveharder_api.py
+   https://helldivers-2.github.io/discord-bot/
+   https://helldivers.wiki.gg/wiki/Helldivers_Wiki
+   https://helldiverstrainingmanual.com/
+   https://livedatacdn.helldiverscompanion.com/live
+   https://www.youtube-nocookie.com/embed/${r}?&controls=0&rel=0&origin=http://helldiverscompanion.com&widget_referrer=http://helldiverscompanion.com
+
+====================================================================================================
+CONCATENATED / TEMPLATE URL FRAGMENTS
+====================================================================================================
+   .html__data.json
+   /512x512.png
+   /__data.json
+   /api/steam-api/news
+   /backgrounds/
+   /backgrounds/grid_scans.png
+   /backgrounds/mapbg.png
+   /backgrounds/mapbg1.webp
+   /backgrounds/overlay_scans.png
+   /backgrounds/stripes_radial.svg
+   /backgrounds/stripes_radial_blue.svg
+   /backgrounds/stripes_radial_red.svg
+   /backgrounds/stripes_small_gray.svg
+   /biomes/blackhole3.webp
+   /biomes/fractured.webp
+   /diag
+   /effects/ahahah.webp
+   /effects/planetPixels.png
+   /effects/planetPixels2.png
+   /externalUrl.svg
+   /gen/biome/biome_unknown.webp
+   /gen/planet/planet_unknown.webp
+   /hellpad/companion/pfp_aze.png
+   /hellpad/companion/pfp_bar.png
+   /hellpad/companion/pfp_squid.png
+   /hellpad/gww/dss_blueprint.webp
+   /hellpad/gww/dss_white.webp
+   /hellpad/gww/ministry_signatures.svg
+   /installation/install-
+   /news
+   /news/
+   /news/helldiver1.webp
+   /news/invasion3.webp
+   /news/liberty_day1.webp
+   /news/planetbg1.webp
+   /news/planetbg2.webp
+   /overdraw
+   /regions/unknown0.webp
+   /terrain
+   /test
+   /warbonds/items/

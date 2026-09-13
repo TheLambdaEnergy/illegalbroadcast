@@ -1,0 +1,114 @@
+chunks: {'0.QUdzYA8T.js': 3921, '1.v1EJhumt.js': 16625, '2.CadSs0XM.js': 2185689, '3.p03rAHov.js': 2114, '4.B4iGjGcm.js': 12373, '5rN7oQIt.js': 10603, '6.Ctoa-Tzg.js': 34831, '7.SQ2LmwHE.js': 43440, 'app.B6rQl1cd.js': 7684, 'BBR8KUv7.js': 32321, 'BImFknRy.js': 5830180, 'BX7dzIyx.js': 159541, 'DEORdNvB.js': 5713, 'DFIdPG-Z.js': 611500, 'DjJUT-aM.js': 14633, 'DOWvQPwB.js': 414, 'I8XnuFrE.js': 10716, 'start.BEijVVoR.js': 83}
+
+====================================================================================================
+### Qk definition
+====================================================================================================
+--[BImFknRy.js:129205]--
+Offline:return t.offline??"OFFLINE";case Fr.Donating:return t.donating??"DONATING";case Fr.Activated:return t.activated??"ACTIVATED";case Fr.Recovering:return t.recovering??"COOLDOWN";default:return t.defTo??"UNKNOWN"}}const ppe={HD2:"01.007.002",HCA:"02.179.009",DAY:"2026.9.12"},H7=["live","beta"],Qk=H7[0],Mn=1e3*40,qz=1e3*60*15,dpe=1e3*60*60*56;function Sz(e=!0){try{const t=localStorage.getItem("API")??"";return e?xa(H7.includes(t)?t:""):H7.includes(t)?t:""}catch{return""}}const A6=v6({name:"warApiKEY"},Sz(),e=>{const t=()=>e(Sz()),i=o=>{o.storageArea===localStorage&&o.key==="API"&&t()},r=()=>t
+
+
+====================================================================================================
+### Sz definition
+====================================================================================================
+--[BImFknRy.js:129254]--
+ng:return t.recovering??"COOLDOWN";default:return t.defTo??"UNKNOWN"}}const ppe={HD2:"01.007.002",HCA:"02.179.009",DAY:"2026.9.12"},H7=["live","beta"],Qk=H7[0],Mn=1e3*40,qz=1e3*60*15,dpe=1e3*60*60*56;function Sz(e=!0){try{const t=localStorage.getItem("API")??"";return e?xa(H7.includes(t)?t:""):H7.includes(t)?t:""}catch{return""}}const A6=v6({name:"warApiKEY"},Sz(),e=>{const t=()=>e(Sz()),i=o=>{o.storageArea===localStorage&&o.key==="API"&&t()},r=()=>t(),n=()=>{document.hidden||t()},a=()=>t();return window.addEventListener("storage",i),window.addEventListener("focus",r),document.addEventListener("visibilit
+
+
+====================================================================================================
+### Qk usages
+====================================================================================================
+--[2.CadSs0XM.js:1204017]--
+){let e=zc(r[1],r[0],el.BUTTONS_B0)||Zl(r[1]),t,i=r[14]==`${xi.HOME}`&&(zc(r[1],r[0],el.BUTTONS_B0)||Zl(r[1])),s,n,o=e&&Qk(r),l=i&&e8(r);return{c(){o&&o.c(),t=te(),l&&l.c(),s=Ee()},l(c){o&&o.l(c),t=ee(c),l&&l.l(c),s=Ee()},m(c,h){o&&o.m(c,h),H(c,t,h),l&&l.m(c,h),H(c,s,h),n=!0},p(c,h){h[0]&3&&(e=zc(c[1],c[0],el.BUTTONS_B0)
+
+--[2.CadSs0XM.js:1204264]--
+h),l&&l.m(c,h),H(c,s,h),n=!0},p(c,h){h[0]&3&&(e=zc(c[1],c[0],el.BUTTONS_B0)||Zl(c[1])),e?o?(o.p(c,h),h[0]&3&&V(o,1)):(o=Qk(c),o.c(),V(o,1),o.m(t.parentNode,t)):o&&(yt(),N(o,1,1,()=>{o=null}),bt()),h[0]&16387&&(i=c[14]==`${xi.HOME}`&&(zc(c[1],c[0],el.BUTTONS_B0)||Zl(c[1]))),i?l?(l.p(c,h),h[0]&16387&&V(l,1)):(l=e8(c),l.c()
+
+--[2.CadSs0XM.js:1205123]--
+)},m(i,s){be(e,i,s),t=!0},p:Je,i(i){t||(V(e.$$.fragment,i),t=!0)},o(i){N(e.$$.fragment,i),t=!1},d(i){ye(e,i)}}}function Qk(r){let e,t,i,s,n;return t=new al({props:{action:r[30],width:r[2].rm.max_xs?64:96,$$slots:{default:[NH]},$$scope:{ctx:r}}}),{c(){e=B("div"),we(t.$$.fragment),this.h()},l(o){e=R(o,"DIV",{class:!0,style
+
+--[BImFknRy.js:129205]--
+WN";default:return t.defTo??"UNKNOWN"}}const ppe={HD2:"01.007.002",HCA:"02.179.009",DAY:"2026.9.12"},H7=["live","beta"],Qk=H7[0],Mn=1e3*40,qz=1e3*60*15,dpe=1e3*60*60*56;function Sz(e=!0){try{const t=localStorage.getItem("API")??"";return e?xa(H7.includes(t)?t:""):H7.includes(t)?t:""}catch{return""}}const A6=v6({name:"war
+
+--[BImFknRy.js:130031]--
+),XW={init:!1};A6.subscribe(()=>{XW.init&&location.reload(),XW.init=!0});const hpe=Gd({name:"isWarApiDefault"},A6,e=>e==Qk||e=="");function $k(){return t0(hpe)}const Qte=Gd({name:"isWarApiCustom"},A6,e=>e!==Qk&&e!=="");function Rz(){return t0(Qte)}const gpe=Gd({name:"isWarApiSelected"},A6,e=>e!=="");function $te(){return
+
+--[BImFknRy.js:130118]--
+name:"isWarApiDefault"},A6,e=>e==Qk||e=="");function $k(){return t0(hpe)}const Qte=Gd({name:"isWarApiCustom"},A6,e=>e!==Qk&&e!=="");function Rz(){return t0(Qte)}const gpe=Gd({name:"isWarApiSelected"},A6,e=>e!=="");function $te(){return t0(gpe)}class bpe{constructor(t={}){we(this,"currentUtcTime");we(this,"src",{...FW});t
+
+--[BImFknRy.js:768559]--
+s,resultPct:0,timeVictory:0,timeRemain:0,mood:0,hcmls:["",""]}}}const xbe=r1("");async function Ybe(){const e=Sz(),t=e||Qk;xbe.set(t);const i=await fetch(`/api/hell-divers-2-api/get-api-data-${t}`,{headers:{accept:"application/json","Accept-Language":"en-US"}});if(!i.ok){const n=await i.text();throw new Error(n??"Failed 
+
+
+====================================================================================================
+### sectorName usage
+====================================================================================================
+--[BImFknRy.js:1429998]--
+n==this.index||n==this.settingsHash)}isUse(...i){const r=i.find(n=>this.is(n[0]));if(r)return r[1]}isUseDef(i,...r){const n=r.find(a=>this.is(a.isID));return n?n.use:i}get infoSector(){return this.sector.index}get sector(){var i;return((i=this.sideboardInfo)==null?void 0:i.sector)??Kk(this.pos)}get sectorName(){return this.sector.name}get isLocationOfDSS(){return this.spaceStations.some(i=>i.id==749875195)}get isLocationOfOfflineDSS(){return this.hasID(Yt.pres_DSSIdle)}get positionCell(){return k5(this.pos)}isSameCell(i={x:0,y:0}){return this.positionCell[0]==k5(i)[0]&&this.positionCell[1]==k5(i)[1]}pos
+
+--[BImFknRy.js:3045887]--
+null}),Be()):r?(r.p(n,a),a&64&&N(r,1)):(r=fU(n),r.c(),N(r,1),r.m(t.parentNode,t))},i(n){i||(N(r),i=!0)},o(n){j(r),i=!1},d(n){n&&y(t),r&&r.d(n)}}}function iSe(e){let t,i,r,n,a,o,s,l,c,u,f;o=new $qe({props:{padx:e[3],width:e[1],height:e[2],glow:e[8],theme:e[5],props:{...e[4],name:e[7].name,niche:e[7].sectorName,color:e[10],icon:e[9],nicheColor:e[11],nicheOpacity:.9,styleContent:e[7].isRekt?e[16]:""}}});const p=e[26].aux,h=ni(p,e,e[25],uU),g=h||tSe(e);return{c(){t=U("div"),i=U("div"),r=U("div"),n=fe(),a=U("div"),Ae(o.$$.fragment),s=fe(),l=U("div"),g&&g.c(),this.h()},l(b){t=G(b,"DIV",{class:!0,style:!0});va
+
+--[BImFknRy.js:3047011]--
+,m(b,m){H(b,t,m),C(t,i),C(i,r),C(i,n),C(i,a),Oe(o,a,null),C(i,s),C(i,l),g&&g.m(l,null),f=!0},p(b,[m]){(!f||m&4096)&&d(r,"style",b[12]);const v={};m&8&&(v.padx=b[3]),m&2&&(v.width=b[1]),m&4&&(v.height=b[2]),m&256&&(v.glow=b[8]),m&32&&(v.theme=b[5]),m&3728&&(v.props={...b[4],name:b[7].name,niche:b[7].sectorName,color:b[10],icon:b[9],nicheColor:b[11],nicheOpacity:.9,styleContent:b[7].isRekt?b[16]:""}),o.$set(v),h?h.p&&(!f||m&33554432)&&ai(h,p,b,b[25],f?si(p,b[25],m,eSe):oi(b[25]),uU):g&&g.p&&(!f||m&16463)&&g.p(b,f?m:-1),(!f||m&131072&&c!==(c=ur(b[17].class??"")+" svelte-1t1u8k8"))&&d(t,"class",c),(!f||m&13
+
+
+====================================================================================================
+### name assignment
+====================================================================================================
+--[2.CadSs0XM.js:590388]--
+ h=Li(e,c),p,g,v,w;rt(r,Js,nt=>t(25,g=nt));let{size:E=330}=e;function k(nt){t(0,L=nt),t(1,A=nt*.56)}let L=E,A=E*.56;class C{constructor(at,Ge,Ye,Qe=Ji.Humans,fe=!1,Ve=0){this.slug=at,this.data=Ge,this.name=Ye,this.faction=Qe,this.isActive=fe,this.level=Ve}}function D(nt){const at=Object.entries(Gh).map(([Ge,Ye])=>{const Qe=nt.filter(pt=>pt.sector.name==Ye.name),fe=Qe.some(pt=>pt.isActive),Ve=Qe.filter(pt
+
+--[2.CadSs0XM.js:946975]--
+},BO=()=>{};function OO(r,e,t){let i,s,n,o,l,c,h,p,g,v;rt(r,Ah,U=>t(3,h=U)),rt(r,Wh,U=>t(9,p=U)),rt(r,Js,U=>t(10,g=U)),rt(r,Mr,U=>t(7,v=U));class w{constructor(X,W,q,Y=Ji.Humans,Q=!1){this.slug=X,this.name=W,this.planets=q,this.faction=Y,this.isActive=Q}}const E=U=>U.filter(X=>X.isReal&&!X.isRemoved);function k(U,X){return X.map(q=>{const Y=E(q.planets).filter(Q=>h.mode==Yu?Q.name.toLowerCase().includes(
+
+--[2.CadSs0XM.js:1275455]--
+eturn M.kind!=="array"||M.N!==0||!O||O.kind!=="array"||typeof O.N=="number"&&O.N!==0||(M=O),new Qi(M,x)}evaluate(){return this.value}eachChild(){}outputDefined(){return!0}}class ji{constructor(f){this.name="ExpressionEvaluationError",this.message=f}toJSON(){return this.message}}const Ri={string:Mt,number:wt,boolean:Lt,object:Bi};class hr{constructor(f,_){this.type=f,this.args=_}static parse(f,_){if(f.leng
+
+--[BImFknRy.js:3141831]--
+N_MITRE=2,z.JOIN_BEVEL=3,z.DEFAULT_QUADRANT_SEGMENTS=8,z.DEFAULT_MITRE_LIMIT=5,z.DEFAULT_SIMPLIFY_FACTOR=.01;var _=function(Y){a(q,Y);var w=h(q);function q(R){var X;return i(this,q),(X=w.call(this,R)).name=Object.keys({Exception:q})[0],X}return n(q,[{key:"toString",value:function(){return this.message}}]),q}(u(Error)),O=function(Y){a(q,Y);var w=h(q);function q(R){var X;return i(this,q),(X=w.call(this,R))
+
+--[BImFknRy.js:3142038]--
+bject.keys({Exception:q})[0],X}return n(q,[{key:"toString",value:function(){return this.message}}]),q}(u(Error)),O=function(Y){a(q,Y);var w=h(q);function q(R){var X;return i(this,q),(X=w.call(this,R)).name=Object.keys({IllegalArgumentException:q})[0],X}return q}(_),A=function(){function Y(){i(this,Y)}return n(Y,[{key:"filter",value:function(w){}}]),Y}();function S(){}function k(){}function W(){}var L,P,D
+
+--[BImFknRy.js:3144487]--
+if(R===-1023){if(X===0)return 0*Ee;R=-1022}else{if(R===1024)return X===0?Ee/0:NaN;X+=1}return Ee*X*V(2,R)});var se=function(Y){a(q,Y);var w=h(q);function q(R){var X;return i(this,q),(X=w.call(this,R)).name=Object.keys({RuntimeException:q})[0],X}return q}(_),ce=function(Y){a(q,Y);var w=h(q);function q(){var R;return i(this,q),R=w.call(this),q.constructor_.apply(f(R),arguments),R}return n(q,null,[{key:"con
+
+
+====================================================================================================
+### planetNameId32 usage
+====================================================================================================
+
+====================================================================================================
+### literal planet-name-like strings (ALL CAPS words) count per chunk
+====================================================================================================
+0.QUdzYA8T.js: total_strings=2 multiword_caps=0
+1.v1EJhumt.js: total_strings=5 multiword_caps=0
+2.CadSs0XM.js: total_strings=569 multiword_caps=250
+   sample: ['ACAMAR IV', 'ACHERNAR SECUNDUS', 'ACHIRD III', 'ACRAB XI', 'ACRUX IX', 'ACUBENS PRIME', 'ADMINISTRATIVE CENTER 02', 'AESIR PASS', 'AFOYAY BAY', 'AH AH AH', 'AIM FOR THE HEAD', 'AIRBORNE INFANTRY', 'ALAIRT III', 'ALAMAK VII', 'ALATHFAR XI', 'ALDERIDGE COVE', 'ALIGNING FTL', 'ALTA V', "ANGEL'S VENTURE", 'ARMORED DIVISION', 'ASPEROTH PRIME', 'ASSAULT REGIMENT', 'AURORA BAY', 'AWAITING JUMP CLEARANCE', 'AWAITING ORDER COMPLETION', 'AZUR SECUNDUS', 'BALDRICK PRIME', 'BE NOT AFRAID', 'BEKVAM III', 'BORE ROCK', 'BUNDA SECUNDUS', 'CERBERUS IIIC', 'CHARON PRIME', 'CHOEPESSA IV', 'CHORT BAY', 'CITIZEN ADVISORY', 'COMBINED ARMS TASK FORCE', 'COMMAND DISPATCH', 'COMPILING SUPER INTEL', 'COMPLY IMMEDIATELY', 'CONDUCT PATROLS', 'CONTRACT OF EMPLOYMENT', 'CONTROL HIGH GROUND', 'COPIED TO CLIPBOARD', 'COPYING TO CLIPBOARD', 'CURRENTLY UNAVAILABLE', 'DARIUS II', 'DAY ', 'DECRYPTING COMPONENT SCHEMA', 'DEFEND YOUR WILL', 'DEFENSE CORPS', 'DEFROSTING TASKS', 'DENEB SECUNDUS', 'DEPLOY TANKS', 'DIASPORA X', 'DISTRIBUTION OF DEMOCRACY', 'DO NOT COMPLY', 'DUMA TYR', 'DUTY IS ITS OWN REWARD', 'EAGLE BLOCKADE']
+3.p03rAHov.js: total_strings=2 multiword_caps=1
+4.B4iGjGcm.js: total_strings=5 multiword_caps=0
+5rN7oQIt.js: total_strings=2 multiword_caps=0
+6.Ctoa-Tzg.js: total_strings=1 multiword_caps=1
+7.SQ2LmwHE.js: total_strings=1 multiword_caps=1
+app.B6rQl1cd.js: total_strings=0 multiword_caps=0
+BBR8KUv7.js: total_strings=0 multiword_caps=0
+BImFknRy.js: total_strings=394 multiword_caps=189
+   sample: ['ACCUMULATION RISK', 'ACHERNAR SECUNDUS', 'ACID BROOD', 'AH AH AH', 'ALIGNING FTL', 'ANALEPTIC ALLOCATION', 'ANNUL DUTY', 'ANOMALOUS INTEL', 'APP UPDATED', 'APP VERSION ', 'ARMORED BROOD', 'AS IS', 'ASSAULT DIVISION', 'AUTOMATON ASSEMBLAGE', 'AUXILIARY ASSEMBLAGE', 'AWAITING CAMPAIGN', 'AWAITING ORDERS', 'AWAITING REINFORCEMENT', 'BATTLE FOR', 'BATTLE FOR CYBERSTAN', 'BATTLE FOR SUPER EARTH', 'BATTLEFIELD BACKUP', 'BOOLEAN OPERATOR', 'BOT INCURSION', 'BREAKING NEWS', 'BUG OUTBREAK', 'C A M P A I G N   V O I D', 'CAMPAIGN DEMARCATION', 'CASTABLE CONSTRAINT', 'CELESTIAL VIGOR', 'COMMANDEERED INFRASTRUCTURE', 'COMPANION DISPATCH', 'COMPANION HELLPAD SYSTEM', 'COMPULSORY WITHDRAWAL', 'CONVENTIONAL BLACK HOLE', 'COSMIC HORROR', 'COSMIC OBSCURITY', 'COSMIC POINT OF INTEREST', 'COVERT PROJECTION', 'CURATIVE CALIBRATION', 'DARK ENERGY ACCUMULATOR', 'DARK ENERGY OVERVIEW', 'DEATH SENTENCE', 'DEFENSIVE ANNEX', 'DEMILITARIZED ZONE', 'DESTROYED PLANET', 'DETECTABLE DATA', 'DISBURSEMENT REVISION', 'DISGRACEFUL CONDUCT', 'DROPPING IN', 'EAGLE BLOCKADE', 'EAGLE STORM', 'ENEMY INFRASTRUCTURE', 'ENEMY INVASION', 'ENEMY INVASION LEVEL', 'ENEMY RESISTANCE', 'ENTER THE VOID', 'ENTITY VITALITY CONFORMITY', 'ENVIRONMENTAL CONDITION', 'ESSENTIAL INFRASTRUCTURE']
+BX7dzIyx.js: total_strings=5 multiword_caps=3
+DEORdNvB.js: total_strings=0 multiword_caps=0
+DFIdPG-Z.js: total_strings=4 multiword_caps=0
+DjJUT-aM.js: total_strings=1 multiword_caps=1
+DOWvQPwB.js: total_strings=0 multiword_caps=0
+I8XnuFrE.js: total_strings=0 multiword_caps=0
+start.BEijVVoR.js: total_strings=0 multiword_caps=0
+
+====================================================================================================
+### live payload id32 distributions
+====================================================================================================
+planetNameId32 counter: [(0, 261), (1441504339, 12)]
+nonzero count: 12
+planetBiomeId32 counter: [(0, 273)]
+settingsHash sample: [897386910, 3621417917, 2543303604, 2768073863, 158585041, 1008084099, 167872110, 1138804949, 3550298780, 1025193891]
+warInfo keys of planetInfos[10]: {"index": 10, "settingsHash": 2767954873, "planetNameId32": 0, "planetBiomeId32": 0, "position": {"x": 0.06770126, "y": -0.1448935}, "waypoints": [], "sector": 2, "maxHealth": 1000000, "disabled": false, "initialOwner": 1}
+galacticWarEffects sample: [{"id": 1, "gameplayEffectId32": 0, "effectType": 43, "flags": 0, "nameHash": 1016609603, "descriptionFluffHash": 0, "descriptionGamePlayLongHash": 3703951420, "descriptionGamePlayShortHash": 473399848, "valueTypes": [1, 0], "values": [-1, 0]}, {"id": 5, "gameplayEffectId32": 0, "effectType": 1, "flags": 0, "nameHash": 3228578710, "descriptionFluffHash": 0, "descriptionGamePlayLongHash": 3577056812, "descriptionGamePlayShortHash": 3338837552, "valueTypes": [2, 0], "values": [-10, 0]}, {"id": 8, "gameplayEffectId32": 0, "effectType": 44, "flags": 0, "nameHash": 1950950127, "descriptionFluffHash": 0, "descriptionGamePlayLongHash": 1634139783, "descriptionGamePlayShortHash": 1534518605, "valueTypes": [2, 0], "values": [200, 0]}]
+n effects: 300

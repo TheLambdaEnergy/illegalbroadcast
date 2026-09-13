@@ -1,0 +1,369 @@
+------------------------------------------------------------------------------------------
+## warInfo.planetInfos  (type=list, len=273)
+{
+  "index": 0,
+  "settingsHash": 897386910,
+  "planetNameId32": 0,
+  "planetBiomeId32": 0,
+  "position": {
+    "x": 0,
+    "y": 0
+  },
+  "waypoints": [],
+  "sector": 0,
+  "maxHealth": 1000000,
+  "disabled": false,
+  "initialOwner": 1
+}
+{
+  "index": 1,
+  "settingsHash": 3621417917,
+  "planetNameId32": 0,
+  "planetBiomeId32": 0,
+  "position": {
+    "x": 0.05373042,
+    "y": 0.10565466
+  },
+  "waypoints": [],
+  "sector": 1,
+  "maxHealth": 1000000,
+  "disabled": false,
+  "initialOwner": 1
+}
+{
+  "index": 2,
+  "settingsHash": 2543303604,
+  "planetNameId32": 0,
+  "planetBiomeId32": 0,
+  "position": {
+    "x": 0.04664221,
+    "y": 0.16758725
+  },
+  "waypoints": [],
+  "sector": 1,
+  "maxHealth": 1000000,
+  "disabled": false,
+  "initialOwner": 1
+}
+
+------------------------------------------------------------------------------------------
+## warInfo.homeWorlds  (type=list, len=2)
+{
+  "race": 1,
+  "planetIndices": [
+    0
+  ]
+}
+{
+  "race": 3,
+  "planetIndices": [
+    260
+  ]
+}
+
+------------------------------------------------------------------------------------------
+## warInfo.planetRegions  (type=list, len=211)
+{
+  "planetIndex": 0,
+  "regionIndex": 0,
+  "settingsHash": 4196558004,
+  "maxHealth": 600000,
+  "regionSize": 3,
+  "flags": 0,
+  "damageMultiplier": 1.5
+}
+{
+  "planetIndex": 0,
+  "regionIndex": 1,
+  "settingsHash": 3958784315,
+  "maxHealth": 600000,
+  "regionSize": 3,
+  "flags": 0,
+  "damageMultiplier": 1.5
+}
+{
+  "planetIndex": 0,
+  "regionIndex": 2,
+  "settingsHash": 1199462527,
+  "maxHealth": 600000,
+  "regionSize": 3,
+  "flags": 0,
+  "damageMultiplier": 1.5
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.planetStatus  (type=list, len=273)
+{
+  "index": 0,
+  "owner": 1,
+  "health": 1000000,
+  "regenPerSecond": 4.1666665,
+  "players": 223,
+  "position": {
+    "x": 0,
+    "y": 0
+  }
+}
+{
+  "index": 1,
+  "owner": 1,
+  "health": 1000000,
+  "regenPerSecond": 4.1666665,
+  "players": 0,
+  "position": {
+    "x": 0.05373042,
+    "y": 0.10565466
+  }
+}
+{
+  "index": 2,
+  "owner": 1,
+  "health": 1000000,
+  "regenPerSecond": 4.1666665,
+  "players": 0,
+  "position": {
+    "x": 0.04664221,
+    "y": 0.16758725
+  }
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.planetAttacks  (type=list, len=59)
+{
+  "source": 212,
+  "target": 259
+}
+{
+  "source": 137,
+  "target": 180
+}
+{
+  "source": 136,
+  "target": 7
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.campaigns  (type=list, len=34)
+{
+  "id": 51413,
+  "planetIndex": 7,
+  "type": 0,
+  "count": 10,
+  "race": 1
+}
+{
+  "id": 51428,
+  "planetIndex": 259,
+  "type": 0,
+  "count": 5,
+  "race": 1
+}
+{
+  "id": 51456,
+  "planetIndex": 157,
+  "type": 0,
+  "count": 15,
+  "race": 1
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.planetEvents  (type=list, len=1)
+{
+  "id": 5692,
+  "planetIndex": 262,
+  "eventType": 1,
+  "race": 3,
+  "health": 1848194,
+  "maxHealth": 2000000,
+  "startTime": 81311130,
+  "expireTime": 81483930,
+  "campaignId": 51707,
+  "jointOperationIds": [
+    5692
+  ],
+  "potentialBuildUp": 0
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.planetActiveEffects  (type=list, len=127)
+{
+  "index": 256,
+  "galacticEffectId": 1190
+}
+{
+  "index": 259,
+  "galacticEffectId": 1188
+}
+{
+  "index": 167,
+  "galacticEffectId": 1188
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.planetRegions  (type=list, len=41)
+{
+  "planetIndex": 114,
+  "regionIndex": 0,
+  "owner": 3,
+  "health": 400000,
+  "regerPerSecond": 1.1111112,
+  "availabilityFactor": 0.57685,
+  "isAvailable": false,
+  "players": 0
+}
+{
+  "planetIndex": 7,
+  "regionIndex": 1,
+  "owner": 4,
+  "health": 100000,
+  "regerPerSecond": 0.2777778,
+  "availabilityFactor": 0.31683,
+  "isAvailable": false,
+  "players": 0
+}
+{
+  "planetIndex": 90,
+  "regionIndex": 0,
+  "owner": 4,
+  "health": 100000,
+  "regerPerSecond": 0.2777778,
+  "availabilityFactor": 0.75115,
+  "isAvailable": false,
+  "players": 0
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.spaceStations  (type=list, len=1)
+{
+  "id32": 749875195,
+  "planetIndex": 253,
+  "activeEffectIds": [
+    1238,
+    1261,
+    1262,
+    1384,
+    1385
+  ],
+  "currentElectionEndWarTime": 81383280,
+  "flags": 1
+}
+
+------------------------------------------------------------------------------------------
+## warStatus.globalEvents  (type=list, len=1)
+{
+  "eventId": 1501011,
+  "id32": 667751423,
+  "portraitId32": 0,
+  "title": "FAILURE",
+  "titleId32": 506754096,
+  "message": "The Helldivers recaptured <i=3>CHARBAL-VII</i>, but the Cyborgs retained hold of <i=3>ZZANIAH PRIME</i>. \n\nMassive server banks were discovered in the captured Megafactories. Cybersecurity specialists have confirmed that these server banks could be used in the conduct of cyberattacks—confirming the enemy's intent beyond doubt.\n\nIt is now It is now indisputable that the Cyborgs are attempting to manipulate the upcoming Quarter-Term elections, and the failure to liberate <i=1>ZZANIAH PRIME</i> means a cyberattack is imminent. To fortify election security, the Super Earth Government has passed an emergency measure permanently requiring armed officers to supervise votes and poll responses. ",
+  "messageId32": 87741131,
+  "race": 1,
+  "flag": 3,
+  "introMediaId32": 0,
+  "outroMediaId32": 730080255,
+  "assignmentId32": 0,
+  "effectIds": [],
+  "planetIndices": [],
+  "expireTime": 81536977
+}
+
+------------------------------------------------------------------------------------------
+## warStats.galaxy_stats  (type=dict, len=15)
+{
+  "missionsWon": 1034204061,
+  "missionsLost": 100783043,
+  "missionTime": 3405406613276,
+  "bugKills": 221449819094,
+  "automatonKills": 117163202862,
+  "illuminateKills": 76305286398,
+  "bulletsFired": 1981115143396,
+  "bulletsHit": 2174033367295,
+  "timePlayed": 3405406613276,
+  "deaths": 8903808455,
+  "revives": 2,
+  "friendlies": 1029938039,
+  "missionSuccessRate": 91.12033584832696,
+  "accurracy": 100,
+  "accuracy": 109.73786024210092
+}
+
+------------------------------------------------------------------------------------------
+## warStats.planets_stats  (type=list, len=300)
+{
+  "planetIndex": -1337,
+  "missionsWon": 0,
+  "missionsLost": 0,
+  "missionTime": 1337,
+  "bugKills": 0,
+  "automatonKills": 1337,
+  "illuminateKills": 1337,
+  "bulletsFired": 1337,
+  "bulletsHit": 0,
+  "timePlayed": 1337,
+  "deaths": 0,
+  "revives": 0,
+  "friendlies": 0,
+  "missionSuccessRate": 0,
+  "accurracy": 0,
+  "accuracy": 0
+}
+{
+  "planetIndex": -420,
+  "missionsWon": 0,
+  "missionsLost": 0,
+  "missionTime": 172,
+  "bugKills": 11,
+  "automatonKills": 0,
+  "illuminateKills": 0,
+  "bulletsFired": 0,
+  "bulletsHit": 0,
+  "timePlayed": 172,
+  "deaths": 0,
+  "revives": 0,
+  "friendlies": 0,
+  "missionSuccessRate": 0,
+  "accurracy": 0,
+  "accuracy": 0
+}
+{
+  "planetIndex": 0,
+  "missionsWon": 16628935,
+  "missionsLost": 2352679,
+  "missionTime": 51860132329,
+  "bugKills": 17454,
+  "automatonKills": 9134,
+  "illuminateKills": 8000394586,
+  "bulletsFired": 38835851717,
+  "bulletsHit": 41179851694,
+  "timePlayed": 51860132329,
+  "deaths": 120602650,
+  "revives": 0,
+  "friendlies": 17284286,
+  "missionSuccessRate": 87.60548497087761,
+  "accurracy": 100,
+  "accuracy": 106.03566002383806
+}
+
+==========================================================================================
+planetStatus.owner distribution:
+  owner: Counter({1: 213, 4: 25, 2: 21, 3: 14})
+  planetInfos sector count: 53
+  planetInfos keys: ['disabled', 'index', 'initialOwner', 'maxHealth', 'planetBiomeId32', 'planetNameId32', 'position', 'sector', 'settingsHash', 'waypoints']
+  planetStatus keys: ['health', 'index', 'owner', 'players', 'position', 'regenPerSecond']
+  warStatus.planetRegions keys: ['availabilityFactor', 'health', 'isAvailable', 'owner', 'planetIndex', 'players', 'regerPerSecond', 'regionIndex']
+  planets_stats keys: ['accuracy', 'accurracy', 'automatonKills', 'bugKills', 'bulletsFired', 'bulletsHit', 'deaths', 'friendlies', 'illuminateKills', 'missionSuccessRate', 'missionTime', 'missionsLost', 'missionsWon', 'planetIndex', 'revives', 'timePlayed']
+  campaigns keys: ['count', 'id', 'planetIndex', 'race', 'type']
+  planetAttacks keys: ['source', 'target']
+  planetEvents keys: ['campaignId', 'eventType', 'expireTime', 'health', 'id', 'jointOperationIds', 'maxHealth', 'planetIndex', 'potentialBuildUp', 'race', 'startTime']
+  planetInfos with empty name: 273
+  planetInfos[0..5] names: [(0, None, 0), (1, None, 1), (2, None, 1), (3, None, 1), (4, None, 1), (5, None, 1)]
+  planetInfos LAST 10: [(264, None, 0), (265, None, 0), (266, None, 0), (267, None, 0), (268, None, 0), (269, None, 0), (270, None, 0), (271, None, 0), (272, None, 0), (273, None, 43)]
+  planets_stats[0..5]: [(-1337, None, None), (-420, None, None), (0, None, None), (1, None, None), (2, None, None), (3, None, None)]
+  planets_stats keys sample: {"planetIndex": -1337, "missionsWon": 0, "missionsLost": 0, "missionTime": 1337, "bugKills": 0, "automatonKills": 1337, "illuminateKills": 1337, "bulletsFired": 1337, "bulletsHit": 0, "timePlayed": 1337, "deaths": 0, "revives": 0, "friendlies": 0, "missionSuccessRate": 0, "accurracy": 0, "accuracy": 0}
+  max playerCount in planets_stats: 0
+  total playerCount: 0
+  warStatus.planetRegions total playerCount: 0
+  planetStatus sample full: [{"index": 0, "owner": 1, "health": 1000000, "regenPerSecond": 4.1666665, "players": 223, "position": {"x": 0, "y": 0}}, {"index": 1, "owner": 1, "health": 1000000, "regenPerSecond": 4.1666665, "players": 0, "position": {"x": 0.05373042, "y": 0.10565466}}]
+  warInfo top keys: ['capitalInfos', 'endDate', 'homeWorlds', 'layoutVersion', 'minimumClientVersion', 'planetInfos', 'planetPermanentEffects', 'planetRegions', 'startDate', 'warId']
+  warStatus top keys: ['activeElectionPolicyEffects', 'campaigns', 'communityTargets', 'globalEvents', 'globalResources', 'impactMultiplier', 'jointOperations', 'layoutVersion', 'planetActiveEffects', 'planetAttacks', 'planetEvents', 'planetRegions', 'planetStatus', 'spaceStations', 'storyBeatId32', 'superEarthWarResults', 'time', 'warId']

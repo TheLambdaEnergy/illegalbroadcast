@@ -1,0 +1,159 @@
+====================================================================================================
+### live 载荷结构树（上游 helldiverscompanion.com）
+====================================================================================================
+dict[14] {
+  appVersion: dict[5] {
+    HD2: str '01.007.002'
+    GEN: str '01.000.136'
+    HCA: str '02.179.009'
+    F: str '0'
+    DAY: str '2026.9.12'
+  }
+  clientTime: int 1789314058312
+  majorOrders: list[0]
+  episodes: list[7] of dict[12] {
+      id32: int 1277775876
+      title: str 'CENSUS THUNDER'
+      description: str 'Voteless hordes are pouring out of the Void, threatening innocent civilians and protected natural refuges. The latest FRV models have b
+      introMessage: str ''
+      outroMessage: str ''
+      race: int 4
+      startWarTime: int 73666950
+      endWarTime: int 74811220
+      bannerImageId32: int 3449236101
+      status: int 2
+      phases: list[3] of dict[10]
+      rewards: list[1] of dict[2]
+    }
+  episodesStatus: list[7] of dict[2] {
+      episodeId32: int 1277775876
+      latestPhaseId32: int 2950822329
+    }
+  warInfo: dict[10] {
+    warId: int 801
+    startDate: int 1706040313
+    endDate: int 1833653095
+    layoutVersion: int 716
+    minimumClientVersion: str '0.3.0'
+    planetInfos: list[273] of dict[10]
+    homeWorlds: list[2] of dict[2]
+    capitalInfos: list[0]
+    planetPermanentEffects: list[0]
+    planetRegions: list[211] of dict[7]
+  }
+  warStatus: dict[18] {
+    warId: int 801
+    time: int 81377010
+    impactMultiplier: float 0.0132590085
+    storyBeatId32: int 0
+    planetStatus: list[273] of dict[6]
+    planetAttacks: list[59] of dict[2]
+    campaigns: list[34] of dict[5]
+    communityTargets: list[0]
+    jointOperations: list[1] of dict[3]
+    planetEvents: list[1] of dict[11]
+    planetActiveEffects: list[127] of dict[2]
+    planetRegions: list[41] of dict[8]
+    activeElectionPolicyEffects: list[0]
+    globalEvents: list[1] of dict[15]
+    superEarthWarResults: list[0]
+    spaceStations: list[1] of dict[5]
+    globalResources: list[0]
+    layoutVersion: int 716
+  }
+  warStats: dict[2] {
+    galaxy_stats: dict[15] {
+      missionsWon: int 1034223200
+      missionsLost: int 100784902
+      missionTime: int 3405475798405
+      bugKills: int 221452318686
+      automatonKills: int 117166279854
+      illuminateKills: int 76305645410
+      bulletsFired: int 1981143609154
+      bulletsHit: int 2174067760861
+      timePlayed: int 3405475798405
+      deaths: int 8903951658
+      revives: int 2
+      friendlies: int 1029953830
+      missionSuccessRate: float 91.12033633747576
+      accurracy: int 100
+      accuracy: float 109.7380195365738
+    }
+    planets_stats: list[300] of dict[16]
+  }
+  warId: int 801
+  news: list[126] of dict[5] {
+      id: int 3786
+      published: int 74350211
+      type: int 0
+      tagIds: list[0]
+      message: str '<i=3>MAJOR ORDER WON</i>\n\nThe Helldivers have liberated <i=1>BLISTICA</i> from the Automatons. Simultaneously, the Helldivers secured
+    }
+  spaceStations: list[1] of dict[7] {
+      id32: int 749875195
+      planetIndex: int 253
+      lastElectionId: str 'b783ae06-55af-f111-9b33-0022484c5cad'
+      currentElectionId: str 'daa25393-76af-f111-9b33-0022484c5cad'
+      currentElectionEndWarTime: int 81383280
+      flags: int 1
+      tacticalActions: list[3] of dict[10]
+    }
+  timeSinceStart: int 83273745
+  galacticWarEffects: list[300] of dict[10] {
+      id: int 1
+      gameplayEffectId32: int 0
+      effectType: int 43
+      flags: int 0
+      nameHash: int 1016609603
+      descriptionFluffHash: int 0
+      descriptionGamePlayLongHash: int 3703951420
+      descriptionGamePlayShortHash: int 473399848
+      valueTypes: list[2] of int 1
+      values: list[2] of int -1
+    }
+  configurationGameClient: dict[5] {
+    pollingConfiguration: list[38] of dict[2]
+    featureConfiguration: list[22] of dict[5]
+    onlineOverrideConfiguration: list[92] of dict[7]
+    matchMakingConfiguration: dict[12] {
+      ping: list[2] of dict[2]
+      inLoadout: list[2] of dict[2]
+      preferenceGroupMatch: list[2] of dict[2]
+      gameProgress: list[3] of dict[2]
+      partySize: list[3] of dict[2]
+      hostability: list[2] of dict[2]
+      isFriend: list[2] of dict[2]
+      isClanMember: list[2] of dict[2]
+      sosBeacons: list[2] of dict[2]
+      missionSelected: list[2] of dict[2]
+      operationProgression: list[2] of dict[2]
+      difficultyGap: list[4] of dict[2]
+    }
+    matchMakingProperties: list[11] of dict[3]
+  }
+}
+
+====================================================================================================
+### 关键字段分布（用于确认哪些 ID 是「被抹掉的」）
+====================================================================================================
+planetInfos 数量: 273
+planetStatus 数量: 273
+planetInfos[].planetNameId32 分布: [(0, 261), (1441504339, 12)]
+planetInfos[].planetBiomeId32 分布: [(0, 273)]
+planetInfos[].sector 去重数: 53
+planetStatus[].owner 分布: [(1, 213), (4, 25), (2, 21), (3, 14)]
+planetStatus 键: ['health', 'index', 'owner', 'players', 'position', 'regenPerSecond']
+planetInfos  键: ['disabled', 'index', 'initialOwner', 'maxHealth', 'planetBiomeId32', 'planetNameId32', 'position', 'sector', 'settingsHash', 'waypoints']
+warStatus.planetRegions 键: ['availabilityFactor', 'health', 'isAvailable', 'owner', 'planetIndex', 'players', 'regerPerSecond', 'regionIndex']
+warStats.planets_stats 键: ['accuracy', 'accurracy', 'automatonKills', 'bugKills', 'bulletsFired', 'bulletsHit', 'deaths', 'friendlies', 'illuminateKills', 'missionSuccessRate', 'missionTime', 'missionsLost', 'missionsWon', 'planetIndex', 'revives', 'timePlayed']
+warStats.planets_stats 里的哨兵记录（index<0）: [-1337, -420]
+索引缺号: [263]
+
+### 顶层键
+['appVersion', 'clientTime', 'configurationGameClient', 'episodes', 'episodesStatus', 'galacticWarEffects', 'majorOrders', 'news', 'spaceStations', 'timeSinceStart', 'warId', 'warInfo', 'warStats', 'warStatus']
+### warStatus 键
+['activeElectionPolicyEffects', 'campaigns', 'communityTargets', 'globalEvents', 'globalResources', 'impactMultiplier', 'jointOperations', 'layoutVersion', 'planetActiveEffects', 'planetAttacks', 'planetEvents', 'planetRegions', 'planetStatus', 'spaceStations', 'storyBeatId32', 'superEarthWarResults', 'time', 'warId']
+### warInfo 键
+['capitalInfos', 'endDate', 'homeWorlds', 'layoutVersion', 'minimumClientVersion', 'planetInfos', 'planetPermanentEffects', 'planetRegions', 'startDate', 'warId']
+### 一条完整的 planetStatus 样例
+{"index": 0, "owner": 1, "health": 1000000, "regenPerSecond": 4.1666665, "players": 226, "position": {"x": 0, "y": 0}}

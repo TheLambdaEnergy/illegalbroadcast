@@ -1,0 +1,11 @@
+# 本项目**不依赖任何第三方包**，只用 Python 标准库（3.10+）。
+#
+# 因此这个文件是空的——它存在只是为了让你 `pip install -r requirements.txt`
+# 时不会报「文件不存在」。
+#
+# 如果你打算扩展这个项目，以下是可选的（并非必需）：
+#
+#   requests     更顺手的 HTTP 客户端（当前用 urllib.request）
+#   fastapi      如果想换成带自动文档的 ASGI 框架（当前用标准库 http.server + 自生成 OpenAPI）
+#   uvicorn      FastAPI 的服务器
+#   pytest       如果想用 pytest 替代 unittest

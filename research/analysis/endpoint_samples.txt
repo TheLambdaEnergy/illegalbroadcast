@@ -1,0 +1,568 @@
+================================================================================
+### /api/v1/war
+{
+ "generated_at": "2026-09-13T15:32:02.553Z",
+ "war": {
+  "war_id": 801,
+  "layout_version": 716,
+  "client_time": "2026-09-13T15:31:58.660Z",
+  "war_time_seconds": 81376470,
+  "time_since_start_seconds": 83273205,
+  "galactic_impact_multiplier": 0.013177137,
+  "app_version": {
+   "HD2": "01.007.002",
+   "GEN": "01.000.136",
+   "HCA": "02.179.009",
+   "F": "0",
+   "DAY": "2026.9.12"
+  },
+  "story_beat_id32": 0
+ },
+ "totals": {
+  "players_online": 99176,
+  "planets_total": 273,
+  "planets_with_divers": 160,
+  "owned_by_faction": {
+   "Humans": 213,
+   "Illuminate": 25,
+   "Terminids": 21,
+   "Automatons": 14
+  },
+  "liberated_planets": 213,
+  "active_campaigns": 34,
+  "active_defenses": 1,
+  "active_major_orders": 1
+ },
+ "impact_calibration": {
+  "hp_per_diver_per_second": 0.000446155,
+  "hp_per_diver_per_hour": 1.6062,
+  "source": "measured",
+  "samples_used": 5,
+  "default_hp_per_diver_per_second": 0.0004443
+ },
+ "galaxy_statistics": {
+  "missions_won": 1034213604.0,
+  "missions_lost": 100783983.0,
+  "mission_time_seconds": 3405441315804.0,
+  "terminid_kills": 221451080823.0,
+  "automaton_kills": 117164742527.0,
+  "illuminate_kills": 76305464777.0,
+  "bullets_fired": 1981129373062.0,
+  "bullets_hit": 2174050577131.0,
+  "time_played_seconds": 3405441315804.0,
+  "deaths": 8903880047.0,
+  "revives": 2.0,
+  "accidental_deaths": 1029945970.0,
+  "mission_success_rate": 91.12033504261538,
+  "missions_total": 1134997587.0,
+  "mission_success_rate_calc": 91.1203,
+  "kills": {
+   "terminids": 221451080823.0,
+   "automatons": 117164742527.0,
+   "illuminate": 76305464777.0,
+   "total": 414921288127.0
+  },
+  "accuracy_percent": 109.7379,
+  "shots_per_hit": 0.9113,
+  "kill_death_ratio": 46.6001,
+  "accidental_death_percent": 11.5674,
+  "time_played_hours": 945955921.06,
+  "raw_gamemode_accuracy": 109.73794072674943,
+  "raw_accurracy_typo": 100.0
+ },
+ "reference": {
+  "generated_at": "2026-09-13T15:28:43.464051Z",
+  "source": "https://api.helldivers2.dev/api/v1/planets",
+  "planet_count": 273,
+  "sector_count": 56
+ }
+}
+================================================================================
+### /api/v1/defenses
+{
+ "generated_at": "2026-09-13T15:32:02.553Z",
+ "count": 1,
+ "defenses": [
+  {
+   "id": 5692,
+   "planet_index": 262,
+   "planet_name": "K",
+   "event_type": 1,
+   "event_type_label": "防御战",
+   "event_type_label_en": "Defense",
+   "faction": {
+    "id": 3,
+    "en": "Automatons",
+    "zh": "机械体",
+    "color": "#e04545"
+   },
+   "health": 1844972.0,
+   "max_health": 2000000.0,
+   "defense_progress_percent": 7.7514,
+   "invasion_level": {
+    "current": 37,
+    "max": 40
+   },
+   "start_war_time": 81311130,
+   "expire_war_time": 81483930,
+   "started_at": "2026-09-12T21:22:58.660Z",
+   "expires_at": "2026-09-14T21:22:58.660Z",
+   "seconds_remaining": 107460.0,
+   "time_remaining_text": "1天5小时",
+   "duration_seconds": 172800.0,
+   "enemy_rate_percent_per_hour": 2.0833,
+   "required_rate_percent_per_hour": 3.0904,
+   "required_divers": 38482,
+   "predicted_outcome": "too_close_to_call",
+   "campaign_id": 51707,
+   "joint_operation_ids": [
+    5692
+   ],
+   "potential_build_up": 0.0,
+   "estimated_diver_rate_percent_per_hour": 1.8242,
+   "predicted_outcome_text": "胜负难料",
+   "diver_surplus": -15767,
+   "players": 22715
+  }
+ ]
+}
+================================================================================
+### /api/v1/major-orders (当前)
+{
+ "id32": 2704421460,
+ "title": "BLAZING ELECTORATE",
+ "description": "Disturbing intelligence reports indicate a coordinated Cyborg plan to disrupt the upcoming Quarter-Term elections. The Helldivers are called upon to ensure the effective and fair Management of this election.",
+ "faction": {
+  "id": 3,
+  "en": "Automatons",
+  "zh": "机械体",
+  "color": "#e04545"
+ },
+ "status": 0,
+ "status_label": "未知",
+ "is_active": true,
+ "has_announced_end": false,
+ "start_war_time": 80932050,
+ "end_war_time": null,
+ "started_at": "2026-09-08T12:04:58.660Z",
+ "ends_at": null,
+ "seconds_remaining": null,
+ "time_remaining_text": "进行中（未公布结束时间）",
+ "rewards": [
+  {
+   "mix_id": 3890208935,
+   "amount": 1
+  }
+ ],
+ "current_phase": {
+  "id32": 968949516,
+  "intro_title": "PREEMPTIVE CYBERDEFENCE",
+  "intro_message": "The Quarter-Term elections, scheduled to begin in two weeks, may be imperiled. Intercepted Cyborg communications indicate a coordinated, covert plan to impede election Management. Fair and liberated election Management is the bedrock of the Federation, and a citizen-cherished tradition.\n\nMinistry of Truth reports indicate the Cyborgs intend to launch a cyberattack with the intent of altering the algorithm that allows citizens to best express their electoral intent. It is believed these assaults will originate from Megafactories on CHARBAL-VII and ZZANIAH PRIME. The Helldivers are ordered to liberate these planets immediately.",
+  "outro_title": "FAILURE",
+  "outro_message": "The Helldivers recaptured CHARBAL-VII, but the Cyborgs retained hold of ZZANIAH PRIME. \n\nMassive server banks were discovered in the captured Megafactories. Cybersecurity specialists have confirmed that these server banks could be used in the conduct of cyberattacks—confirming the enemy's intent beyond doubt.\n\nIt is now It is now indisputable that the Cyborgs are attempting to manipulate the upcoming Quarter-Term elections, and the failure to liberate ZZANIAH PRIME means a cyberattack is imminent. To fortify election security, the Super Earth Government has passed an emergency measure permanently requiring armed officers to supervise votes and poll responses.",
+  "is_current": true
+ }
+}
+--- current_phase ---
+{
+ "id32": 968949516,
+ "intro_title": "PREEMPTIVE CYBERDEFENCE",
+ "intro_message": "The Quarter-Term elections, scheduled to begin in two weeks, may be imperiled. Intercepted Cyborg communications indicate a coordinated, covert plan to impede election Management. Fair and liberated election Management is the bedrock of the Federation, and a citizen-cherished tradition.\n\nMinistry of Truth reports indicate the Cyborgs intend to launch a cyberattack with the intent of altering the algorithm that allows citizens to best express their electoral intent. It is believed these assaults will originate from Megafactories on CHARBAL-VII and ZZANIAH PRIME. The Helldivers are ordered to liberate these planets immediately.",
+ "outro_title": "FAILURE",
+ "outro_message": "The Helldivers recaptured CHARBAL-VII, but the Cyborgs retained hold of ZZANIAH PRIME. \n\nMassive server banks were discovered in the captured Megafactories. Cybersecurity specialists have confirmed that these server banks could be used in the conduct of cyberattacks—confirming the enemy's intent beyond doubt.\n\nIt is now It is now indisputable that the Cyborgs are attempting to manipulate the upcoming Quarter-Term elections, and the failure to liberate ZZANIAH PRIME means a cyberattack is imminent. To fortify election security, the Super Earth Government has passed an emergency measure permanently requiring armed officers to supervise votes and poll responses.",
+ "is_current": true
+}
+================================================================================
+### /api/v1/planets 人口前 5（完整字段）
+{
+ "index": 253,
+ "name": "ZZANIAH PRIME",
+ "sector": "Gellert",
+ "biome": {
+  "en": "Desert Dunes",
+  "zh": "沙漠沙丘",
+  "description": "A blazing-hot desert planet, its rocky mesas are the sole interruptions to the endless sea of dunes."
+ },
+ "owner": {
+  "id": 3,
+  "en": "Automatons",
+  "zh": "机械体",
+  "color": "#e04545"
+ },
+ "status": "解放中",
+ "players": 24711,
+ "liberation_percent": 73.307,
+ "health": 533860.0,
+ "max_health": 2000000.0,
+ "resistance": {
+  "regen_per_second": 8.333333,
+  "regen_per_hour": 30000.0,
+  "percent_per_hour": 1.5
+ },
+ "liberation_rate": {
+  "net_percent_per_hour": 0.5182,
+  "source": "measured",
+  "measured": {
+   "window_seconds": 901.8,
+   "from": "2026-09-13T15:00:48.0929499Z",
+   "to": "2026-09-13T15:15:49.8542086Z",
+   "players_avg": 25137.0,
+   "diver_rate_percent_per_hour": 2.0182,
+   "net_rate_percent_per_hour": 0.5182
+  },
+  "estimated_diver_percent_per_hour": 1.9845,
+  "estimated_net_percent_per_hour": 0.4845
+ },
+ "eta_liberation_text": "2天3小时"
+}
+----------------------------------------
+{
+ "index": 262,
+ "name": "K",
+ "sector": "Trigon",
+ "biome": {
+  "en": "Magma",
+  "zh": "熔岩",
+  "description": "Constant eruptions keep this planet covered in lava flows and utterly inhospitable to Democratic life. It also makes it a treasure trove of rare minerals."
+ },
+ "owner": {
+  "id": 1,
+  "en": "Humans",
+  "zh": "超级地球",
+  "color": "#4a9de0"
+ },
+ "status": "防御中",
+ "players": 22715,
+ "liberation_percent": 100.0,
+ "health": 2000000.0,
+ "max_health": 2000000.0,
+ "resistance": {
+  "regen_per_second": 0.0,
+  "regen_per_hour": 0.0,
+  "percent_per_hour": 0.0
+ },
+ "liberation_rate": {
+  "net_percent_per_hour": 0.0,
+  "source": "measured",
+  "measured": {
+   "window_seconds": 901.8,
+   "from": "2026-09-13T15:00:48.0929499Z",
+   "to": "2026-09-13T15:15:49.8542086Z",
+   "players_avg": 21665.0,
+   "diver_rate_percent_per_hour": 0.0,
+   "net_rate_percent_per_hour": 0.0
+  },
+  "estimated_diver_percent_per_hour": 1.8242,
+  "estimated_net_percent_per_hour": 1.8242
+ },
+ "eta_liberation_text": null
+}
+----------------------------------------
+{
+ "index": 269,
+ "name": "BRILLIANCE",
+ "sector": "Orion",
+ "biome": {
+  "en": "Deciduous Forest",
+  "zh": "落叶林",
+  "description": "Broadleaf woodlands spread across rolling hills, broken by shallow waters that wind through mossy logs, flowers, and stone. (UNOFFICIAL)"
+ },
+ "owner": {
+  "id": 2,
+  "en": "Terminids",
+  "zh": "终结族",
+  "color": "#f0a020"
+ },
+ "status": "解放中",
+ "players": 14117,
+ "liberation_percent": 0.0,
+ "health": 2000000.0,
+ "max_health": 2000000.0,
+ "resistance": {
+  "regen_per_second": 6.944445,
+  "regen_per_hour": 25000.0,
+  "percent_per_hour": 1.25
+ },
+ "liberation_rate": {
+  "net_percent_per_hour": 0.0,
+  "source": "measured",
+  "measured": {
+   "window_seconds": 901.8,
+   "from": "2026-09-13T15:00:48.0929499Z",
+   "to": "2026-09-13T15:15:49.8542086Z",
+   "players_avg": 14734.0,
+   "diver_rate_percent_per_hour": 0.0,
+   "net_rate_percent_per_hour": 0.0
+  },
+  "estimated_diver_percent_per_hour": 1.1337,
+  "estimated_net_percent_per_hour": -0.1163
+ },
+ "eta_liberation_text": null
+}
+----------------------------------------
+{
+ "index": 79,
+ "name": "HEETH",
+ "sector": "Orion",
+ "biome": {
+  "en": "Icy Glaciers",
+  "zh": "冰川",
+  "description": "Submerged in eternal winter, this world's frosty peaks glimmer in the light of its too-distant star."
+ },
+ "owner": {
+  "id": 2,
+  "en": "Terminids",
+  "zh": "终结族",
+  "color": "#f0a020"
+ },
+ "status": "解放中",
+ "players": 6254,
+ "liberation_percent": 0.0,
+ "health": 1000000.0,
+ "max_health": 1000000.0,
+ "resistance": {
+  "regen_per_second": 5.555555,
+  "regen_per_hour": 20000.0,
+  "percent_per_hour": 2.0
+ },
+ "liberation_rate": {
+  "net_percent_per_hour": 0.0,
+  "source": "measured",
+  "measured": {
+   "window_seconds": 901.8,
+   "from": "2026-09-13T15:00:48.0929499Z",
+   "to": "2026-09-13T15:15:49.8542086Z",
+   "players_avg": 6607.0,
+   "diver_rate_percent_per_hour": 0.0,
+   "net_rate_percent_per_hour": 0.0
+  },
+  "estimated_diver_percent_per_hour": 1.0045,
+  "estimated_net_percent_per_hour": -0.9955
+ },
+ "eta_liberation_text": null
+}
+----------------------------------------
+{
+ "index": 217,
+ "name": "PHACT BAY",
+ "sector": "Jin Xi",
+ "biome": {
+  "en": "Desert Dunes",
+  "zh": "沙漠沙丘",
+  "description": "A blazing-hot desert planet, its rocky mesas are the sole interruptions to the endless sea of dunes."
+ },
+ "owner": {
+  "id": 2,
+  "en": "Terminids",
+  "zh": "终结族",
+  "color": "#f0a020"
+ },
+ "status": "解放中",
+ "players": 5896,
+ "liberation_percent": 0.0,
+ "health": 2200000.0,
+ "max_health": 2200000.0,
+ "resistance": {
+  "regen_per_second": 6.944445,
+  "regen_per_hour": 25000.0,
+  "percent_per_hour": 1.1364
+ },
+ "liberation_rate": {
+  "net_percent_per_hour": 0.0,
+  "source": "measured",
+  "measured": {
+   "window_seconds": 901.8,
+   "from": "2026-09-13T15:00:48.0929499Z",
+   "to": "2026-09-13T15:15:49.8542086Z",
+   "players_avg": 5887.0,
+   "diver_rate_percent_per_hour": 0.0,
+   "net_rate_percent_per_hour": 0.0
+  },
+  "estimated_diver_percent_per_hour": 0.4305,
+  "estimated_net_percent_per_hour": -0.7059
+ },
+ "eta_liberation_text": null
+}
+----------------------------------------
+================================================================================
+### /api/v1/planets/114 完整
+{
+ "index": 114,
+ "name": "AURORA BAY",
+ "sector": "Valdis",
+ "biome": {
+  "en": "Tundra",
+  "zh": "苔原",
+  "description": "A perennially chilly climate has allowed short, colorful shrubs to flourish across this planet's surface."
+ },
+ "hazards": [
+  {
+   "en": "None",
+   "zh": "无",
+   "description": "This planet's environment is not yet known, or has no environmental modifiers."
+  }
+ ],
+ "position": {
+  "x": -0.44310373,
+  "y": 0.599078
+ },
+ "waypoints": [
+  "CHOOHE"
+ ],
+ "max_health": 1600000.0,
+ "health": 1600000.0,
+ "health_percent": 100.0,
+ "owner": {
+  "id": 3,
+  "en": "Automatons",
+  "zh": "机械体",
+  "color": "#e04545"
+ },
+ "liberation_percent": 0.0,
+ "is_liberated": false,
+ "players": 490,
+ "player_share_percent": 0.4941,
+ "resistance": {
+  "regen_per_second": 13.888889,
+  "regen_per_hour": 50000.0,
+  "percent_per_hour": 3.125
+ },
+ "liberation_rate": {
+  "net_percent_per_hour": 0.0,
+  "source": "measured",
+  "measured": {
+   "window_seconds": 901.8,
+   "from": "2026-09-13T15:00:48.0929499Z",
+   "to": "2026-09-13T15:15:49.8542086Z",
+   "players_avg": 531.0,
+   "diver_rate_percent_per_hour": 0.0,
+   "net_rate_percent_per_hour": 0.0
+  },
+  "estimated_diver_percent_per_hour": 0.0492,
+  "estimated_net_percent_per_hour": -3.0758
+ },
+ "eta_liberation_seconds": null,
+ "eta_liberation_text": null,
+ "is_homeworld": false,
+ "disabled": false,
+ "active_effects": [
+  1239,
+  1363
+ ],
+ "campaign": {
+  "id": 51485,
+  "planet_index": 114,
+  "planet_name": "AURORA BAY",
+  "type": 0,
+  "type_label": "解放战役",
+  "type_label_en": "Liberation",
+  "count": 2,
+  "faction": {
+   "id": 1,
+   "en": "Humans",
+   "zh": "超级地球",
+   "color": "#4a9de0"
+  }
+ },
+ "event": null,
+ "regions": [
+  {
+   "index": 0,
+   "name": "BATU BELIG",
+   "size": "City",
+   "size_zh": "城市",
+   "owner": {
+    "id": 3,
+    "en": "Automatons",
+    "zh": "机械体",
+    "color": "#e04545"
+   },
+   "health": 400000.0,
+   "max_health": 400000.0,
+   "health_percent": 100.0,
+   "controlled_percent": 100.0,
+   "regen_per_second": 1.111111,
+   "regen_percent_per_hour": 1.0,
+   "availability_factor": 0.57685,
+   "is_available": false,
+   "players": 0
+  },
+  {
+   "index": 1,
+   "name": "EAGLEMOUNT",
+   "size": "Town",
+   "size_zh": "城镇",
+   "owner": {
+    "id": 3,
+    "en": "Automatons",
+    "zh": "机械体",
+    "color": "#e04545"
+   },
+   "health": 200000.0,
+   "max_health": 200000.0,
+   "health_percent": 100.0,
+   "controlled_percent": 100.0,
+   "regen_per_second": 0.555556,
+   "regen_percent_per_hour": 1.0,
+   "availability_factor": 1.0,
+   "is_available": true,
+   "players": 159
+  }
+ ],
+ "statistics": {
+  "missions_won": 5902331.0,
+  "missions_lost": 939594.0,
+  "mission_time_seconds": 21782460851.0,
+  "terminid_kills": 7022.0,
+  "automaton_kills": 1429756722.0,
+  "illuminate_kills": 23172.0,
+  "bullets_fired": 7815590569.0,
+  "bullets_hit": 8623441982.0,
+  "time_played_seconds": 21782460851.0,
+  "deaths": 54480850.0,
+  "revives": 0.0,
+  "accidental_deaths": 4373884.0,
+  "mission_success_rate": 86.26711049887275,
+  "missions_total": 6841925.0,
+  "mission_success_rate_calc": 86.2671,
+  "kills": {
+   "terminids": 7022.0,
+   "automatons": 1429756722.0,
+   "illuminate": 23172.0,
+   "total": 1429786916.0
+  },
+  "accuracy_percent": 110.3364,
+  "shots_per_hit": 0.9063,
+  "kill_death_ratio": 26.2438,
+  "accidental_death_percent": 8.0283,
+  "time_played_hours": 6050683.57,
+  "raw_gamemode_accuracy": 110.33640907706051,
+  "raw_accurracy_typo": 100.0
+ },
+ "status": "解放中"
+}
+================================================================================
+### /api/v1/sectors/Altus
+{
+ "name": "Altus",
+ "planet_count": 5,
+ "liberated_count": 5,
+ "liberated_percent": 100.0,
+ "owned_by": {
+  "Humans": 5
+ },
+ "players": 3,
+ "planets": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ]
+}
+--- 星区内星球摘要 ---
+  WIDOW'S HARBOR     Moon         解放度 100.000%  人数      1  阵营 超级地球  状态 已解放
+  NEW HAVEN          Ionic Jungle 解放度 100.000%  人数      1  阵营 超级地球  状态 已解放
+  PILEN V            Desert Cliffs 解放度 100.000%  人数      1  阵营 超级地球  状态 已解放
+  KLEN DAHTH II      Desert Dunes 解放度 100.000%  人数      0  阵营 超级地球  状态 已解放
+  PATHFINDER V       Plains       解放度 100.000%  人数      0  阵营 超级地球  状态 已解放

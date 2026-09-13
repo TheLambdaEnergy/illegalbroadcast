@@ -1,0 +1,23 @@
+KT in 2.CadSs0XM.js: 260 entries, literal 2979 chars
+  first3: ["SUPER EARTH","KLEN DAHTH II","PATHFINDER V"]
+  last3: ["ZAGON PRIME","OMICRON","MARS"]
+  sample around the truncation point: ["DIASPORA X","GEMSTONE BLUFFS","ZAGON PRIME","OMICRON","MARS"]
+
+=== big literal tables ===
+2.CadSs0XM.js          KT     len=   2979 strings=  260 array[260]
+2.CadSs0XM.js          x0     len=  11591 strings=   27 array[9] of object{name,slug,titleClass,type,price,pages,unlocks}
+2.CadSs0XM.js          fe     len=  30941 strings= 1193 object{$version,$root,sources,source,source_vector,source_raster,source_raster_dem,source_geojson,...}
+2.CadSs0XM.js          Gp     len=   3727 strings=  116 object{paint,layout}
+BImFknRy.js            S2e    len=   3585 strings=   27 array[14] of object{title,body}
+BImFknRy.js            R2e    len=   4598 strings=   65 array[33] of object{title,body}
+BImFknRy.js            Dge    len=  40288 strings=   18 array[38]
+BImFknRy.js            F0e    len=   2589 strings=   54 object{cd,ls,pwd,mkdir,touch,rm,rmdir,cat,...}
+BImFknRy.js            bke    len= 153839 strings=   17 object{cityCirc,city4,city1,city2,city3,compassGold,compassWhite,ylwZones,...}
+BImFknRy.js            eNe    len=   2033 strings=   98 object{time,legend,toolbox,series,aria}
+BImFknRy.js            EJ     len=   2473 strings=   34 object{axisLine,axisTickLabel,axisName}
+BImFknRy.js            k8     len=   2493 strings=   45 object{g,rect,circle,line,ellipse,polygon,polyline,image,...}
+BImFknRy.js            vJe    len=   3061 strings=   41 object{axisLine,axisTick,minorTick,axisLabel,splitLine,minorSplitLine,splitArea}
+BImFknRy.js            Jrt    len= 711298 strings=   28 array[339]
+BImFknRy.js            Qrt    len=   8195 strings=  244 array[257]
+BImFknRy.js            $rt    len=   9794 strings=  216 array[247]
+DFIdPG-Z.js            W      len=  12301 strings=  492 object{page_bd_gray,page_bg_gray,page_bg_black,pad_blue_L1,pad_blue,pad_blue_D1,pad_blue_D2,pad_blue_D3,...}

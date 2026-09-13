@@ -1,0 +1,69 @@
+====================================================================================================
+### 所有 CDN URL 字面量
+====================================================================================================
+  https://cdn.helldiverscompanion.com/live
+  https://cdn.helldiverscompanion.com/live/globalResources/recent.json
+  https://cdn.helldiverscompanion.com/live/planetEvents/2days.json
+  https://cdn.helldiverscompanion.com/live/planetRegions/recent.json
+  https://cdn.helldiverscompanion.com/live/planets/${e.index}/recent.json
+  https://livedatacdn.helldiverscompanion.com/live
+
+====================================================================================================
+### get*History* 方法定义
+====================================================================================================
+-- BImFknRy.js :: get2DaysAll_HistoricPlanetEvent() --
+   static async get2DaysAll_HistoricPlanetEvent(){try{return(await X1.getPlanetEventHistory2Days()).data??[]}catch(t){return X1.fallback(t,"planetEvents/2days")}}static async getRecentID_HistoricPlanetStatus(t){try{return(await X1.getPlanetStatusHistoryRecent(t)).data??[]}catch(i){return X1.fallback(i,`planets/${t}/recent`)}}static async getRecentID_HistoricPlanetSummary(t){try{return(await X1.getPlanetSummaryHistoryRec
+
+-- BImFknRy.js :: getRecentID_HistoricPlanetStatus(t) --
+   static async getRecentID_HistoricPlanetStatus(t){try{return(await X1.getPlanetStatusHistoryRecent(t)).data??[]}catch(i){return X1.fallback(i,`planets/${t}/recent`)}}static async getRecentID_HistoricPlanetSummary(t){try{return(await X1.getPlanetSummaryHistoryRecent(t)).data??[]}catch(i){return X1.fallback(i,`warSummary/planets/${t}/recent`)}}static async getRecentAll_HistoricPlanetRegion(){try{return(await X1.getPlane
+
+-- BImFknRy.js :: getRecentID_HistoricPlanetSummary(t) --
+   static async getRecentID_HistoricPlanetSummary(t){try{return(await X1.getPlanetSummaryHistoryRecent(t)).data??[]}catch(i){return X1.fallback(i,`warSummary/planets/${t}/recent`)}}static async getRecentAll_HistoricPlanetRegion(){try{return(await X1.getPlanetRegionsHistoryRecent()).data??[]}catch(t){return X1.fallback(t,"planetRegions/recent")}}static async get2DaysID_HistoricSpaceStation(t=749875195){try{return(await X
+
+-- BImFknRy.js :: getRecentAll_HistoricPlanetRegion() --
+   static async getRecentAll_HistoricPlanetRegion(){try{return(await X1.getPlanetRegionsHistoryRecent()).data??[]}catch(t){return X1.fallback(t,"planetRegions/recent")}}static async get2DaysID_HistoricSpaceStation(t=749875195){try{return(await X1.getSpaceStationsHistory2Days(t)).data??[]}catch(i){return X1.fallback(i,`spaceStations/${t}/2days`)}}static async getRecentAll_HistoricAssignment(){try{return(await X1.getAssig
+
+-- BImFknRy.js :: get2DaysID_HistoricSpaceStation(t=749875195) --
+   static async get2DaysID_HistoricSpaceStation(t=749875195){try{return(await X1.getSpaceStationsHistory2Days(t)).data??[]}catch(i){return X1.fallback(i,`spaceStations/${t}/2days`)}}static async getRecentAll_HistoricAssignment(){try{return(await X1.getAssignmentHistoryRecent()).data??[]}catch(t){return X1.fallback(t,"assignments/recent")}}static async get2DaysAll_HistoricGlobalResource(){try{return(await X1.getGlobalRes
+
+-- BImFknRy.js :: getRecentAll_HistoricAssignment() --
+   static async getRecentAll_HistoricAssignment(){try{return(await X1.getAssignmentHistoryRecent()).data??[]}catch(t){return X1.fallback(t,"assignments/recent")}}static async get2DaysAll_HistoricGlobalResource(){try{return(await X1.getGlobalResourceHistory2Days()).data??[]}catch(t){return X1.fallback(t,"globalResources/2days")}}static async getRecentAll_HistoricGlobalResource(){try{return(await X1.getGlobalResourceHisto
+
+-- BImFknRy.js :: get2DaysAll_HistoricGlobalResource() --
+   static async get2DaysAll_HistoricGlobalResource(){try{return(await X1.getGlobalResourceHistory2Days()).data??[]}catch(t){return X1.fallback(t,"globalResources/2days")}}static async getRecentAll_HistoricGlobalResource(){try{return(await X1.getGlobalResourceHistoryRecent()).data??[]}catch(t){return X1.fallback(t,"globalResources/recent")}}static async groupHistoricEventsByPlanetIndex(){const t=await X1.get2DaysAll_Hist
+
+-- BImFknRy.js :: getRecentAll_HistoricGlobalResource() --
+   static async getRecentAll_HistoricGlobalResource(){try{return(await X1.getGlobalResourceHistoryRecent()).data??[]}catch(t){return X1.fallback(t,"globalResources/recent")}}static async groupHistoricEventsByPlanetIndex(){const t=await X1.get2DaysAll_HistoricPlanetEvent(),i=new Map;for(const r of t)for(const n of r.planetEvents){const a={...n,timestampUtc:r.timestampUtc,warTime:r.warTime},o=i.get(n.planetIndex);o?o.push
+
+-- BImFknRy.js :: getNewestHistoricNonHumanStatusTime() --
+   getNewestHistoricNonHumanStatusTime(){let i=0;for(const r of this.src.histRegionStatus){if(r.owner===rt.Humans)continue;const n=Date.parse(r.timestampUtc);nr(n)&&n>i&&(i=n)}return i}get victoriousCapturePct(){if(!(this.isOurs&&!this.isAccessible)||this.src.histRegionStatus.length===0)return 0;const r=this.getNewestHistoricNonHumanStatusTime();return r<=0?0:this.getPostMortemPct(r)}get victoriousPct(){return this.vict
+
+-- BImFknRy.js :: getNewestHistoricNonHumanStatusTime() --
+   getNewestHistoricNonHumanStatusTime(){let i=0;for(const r of this.src.histPlanetStatus){if(r.owner===rt.Humans)continue;const n=Date.parse(r.timestampUtc);nr(n)&&n>i&&(i=n)}return i}getNewestHistoricEventTime(){let i=0;for(const r of this.src.histPlanetEvents){if(!wz(r.eventType))continue;const n=Date.parse(r.timestampUtc);nr(n)&&n>i&&(i=n)}return i}}const kve={...gb,...xk,apiCampaignType:null,apiEventType:null,facti
+
+-- BImFknRy.js :: getNewestHistoricEventTime() --
+   getNewestHistoricEventTime(){let i=0;for(const r of this.src.histPlanetEvents){if(!wz(r.eventType))continue;const n=Date.parse(r.timestampUtc);nr(n)&&n>i&&(i=n)}return i}}const kve={...gb,...xk,apiCampaignType:null,apiEventType:null,faction:rt.None,deltaHealth:0,maxHealth:1,tags:[],race:rt.None,startTime:0,expireTime:0,globalResourceId:-1,sectorIndex:-1,term:"",statusHistory:[]},To=class To extends ho{constructor(i={
+
+-- BImFknRy.js :: getNewestHistoricNonHumanStatusTime() --
+   getNewestHistoricNonHumanStatusTime(){let i=0;for(const r of this.src.histPlanetStatus){if(r.owner===rt.Humans)continue;const n=Date.parse(r.timestampUtc);nr(n)&&n>i&&(i=n)}return i}getNewestHistoricEventTime(){let i=0;for(const r of this.src.histPlanetEvents){if(!wz(r.eventType))continue;const n=Date.parse(r.timestampUtc);nr(n)&&n>i&&(i=n)}return i}get victoriousLiberationPct(){if(!(this.isOurs&&!this.isCampaigned&&
+
+-- BImFknRy.js :: getNewestHistoricEventTime() --
+   getNewestHistoricEventTime(){let i=0;for(const r of this.src.histPlanetEvents){if(!wz(r.eventType))continue;const n=Date.parse(r.timestampUtc);nr(n)&&n>i&&(i=n)}return i}get victoriousLiberationPct(){if(!(this.isOurs&&!this.isCampaigned&&!this.isEventful)||this.src.histPlanetStatus.length===0)return 0;const r=this.getNewestHistoricNonHumanStatusTime();return r<=0?0:this.getPostMortemPct(r)}get victoriousEventPct(){if
+
+====================================================================================================
+### cdnFetch 调用点
+====================================================================================================
+-- BImFknRy.js @770286 --
+   Utc,a);const n=Array.from(r.values());return n.sort((a,o)=>a.timestampUtc.localeCompare(o.timestampUtc)),n}static async cdnFetch(t,i,r){const n=await fetch(t,{headers:{accept:"application/json"}});if(n.status===404&&r!==void 0)return r;if(!n.ok)throw new Error(`CDN fetch failed: ${n.status} ${n.statusText} ${t}`);let a=await n.json();return a=(i==null?void 0:i(a))??a,a}static 
+-- BImFknRy.js @770839 --
+   y(i.length);for(let n=0;n<i.length;n++)r[n]=i.charCodeAt(n);return r}static async getCurrentElections(){return await X1.cdnFetch(`${X1.fastCDN}/elections/current.json`,t=>void t.data,{timestampUtc:new Date().toISOString(),data:[]})}static async getCurrentShoutcastStats(){return await X1.cdnFetch(`${X1.fastCDN}/freedomallianceradio/stats.json`,t=>{})}static async getCurrentPerso
+-- BImFknRy.js @771007 --
+   t=>void t.data,{timestampUtc:new Date().toISOString(),data:[]})}static async getCurrentShoutcastStats(){return await X1.cdnFetch(`${X1.fastCDN}/freedomallianceradio/stats.json`,t=>{})}static async getCurrentPersonalOrders(){return await X1.cdnFetch(`${X1.slowCDN}/personalOrders/current.json`,t=>void t.data)}static async getCurrentSuperstore(){return await X1.cdnFetch(`${X1.slow
+-- BImFknRy.js @771127 --
+   cdnFetch(`${X1.fastCDN}/freedomallianceradio/stats.json`,t=>{})}static async getCurrentPersonalOrders(){return await X1.cdnFetch(`${X1.slowCDN}/personalOrders/current.json`,t=>void t.data)}static async getCurrentSuperstore(){return await X1.cdnFetch(`${X1.slowCDN}/store/current.json`,t=>void t.data)}static async getPlanetStatusHistoryRecent(t){return await X1.cdnFetchCached2Day
+-- BImFknRy.js @771248 --
+   dnFetch(`${X1.slowCDN}/personalOrders/current.json`,t=>void t.data)}static async getCurrentSuperstore(){return await X1.cdnFetch(`${X1.slowCDN}/store/current.json`,t=>void t.data)}static async getPlanetStatusHistoryRecent(t){return await X1.cdnFetchCached2Days(`planetStatus:${t}`,`${X1.slowCDN}/planets/${t}/recent.json`,{timestampUtc:new Date().toISOString(),data:[]})}static as
+-- BImFknRy.js @773270 --
+   endedApiInformation",`${X1.slowCDN}/extendedApiInformation/2days.json`)}static async getSteamNewsFeed(){return await X1.cdnFetch("/api/steam-api/news",t=>Array.isArray(t)?t:t.appnews.newsitems.map(({gid:i,title:r,url:n,contents:a,date:o,tags:s})=>{const l=Array.from(a.matchAll(new RegExp("(?<=\\[img\\]\\{STEAM_CLAN_IMAGE\\})(.*)\\.(png|webp|jpeg|jpg)(?=\\[\\/img\\])","g"))).map
+-- BImFknRy.js @776953 --
+   rn Number.isFinite(l)&&l>=a});return X1.twoDayCache.set(t,o),o}static async cdnFetchCached2Days(t,i,r){const n=await X1.cdnFetch(i,void 0,r),a=X1.apply2DayCache(t,n.data??[]),o=a.length?a[a.length-1].timestampUtc:n.timestampUtc;return{...n,timestampUtc:o,data:a}}};we(X1,"slowCDN","https://cdn.helldiverscompanion.com/live"),we(X1,"fastCDN","https://livedatacdn.helldiverscompanio

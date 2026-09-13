@@ -1,0 +1,22 @@
+# 运行时产物 / 反向工程的大体积快照（可用 research/fetch_evidence.py 重新生成）
+research/raw/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.deps/
+.tmp/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+
+# 导出的快照
+snap.json
+*.dump.json
