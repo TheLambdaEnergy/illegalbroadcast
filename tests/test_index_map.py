@@ -23,8 +23,10 @@ from scripts.build_index_map import (  # noqa: E402
     CSV_PATH,
     MD_PATH,
     REF_PATH,
+    TRANS_PATH,
     build_markdown,
     csv_rows,
+    load_translations,
 )
 
 HINT = "请运行: python scripts/build_index_map.py"
@@ -54,11 +56,12 @@ class TestIndexMapInSync(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.doc = json.loads(read_text(REF_PATH))
+        cls.trans = load_translations()
         cls.planets = cls.doc["planets"]
 
     def test_markdown_matches_regenerated_content(self):
         disk = read_text(MD_PATH)
-        expected = build_markdown(self.doc)
+        expected = build_markdown(self.doc, self.trans)
         if disk != expected:
             disk_lines = disk.splitlines()
             exp_lines = expected.splitlines()
@@ -79,7 +82,7 @@ class TestIndexMapInSync(unittest.TestCase):
             rows = list(reader)
         self.assertEqual(header, CSV_HEADER, f"CSV 表头不对；{HINT}")
 
-        expected = [norm_row(r) for r in csv_rows(self.doc)]
+        expected = [norm_row(r) for r in csv_rows(self.doc, self.trans)]
         rows = [norm_row(r) for r in rows]
         self.assertEqual(len(rows), len(expected),
                          f"CSV 行数 {len(rows)} != {len(expected)}；{HINT}")
@@ -93,10 +96,68 @@ class TestIndexMapInSync(unittest.TestCase):
                 )
 
 
+class TestTranslationsArePreserved(unittest.TestCase):
+    """`data/translations_zh.json` 是手写数据，重新生成对照表**绝不能**弄丢它。
+
+    这条回归是有来历的：这些译名最早是直接填在 planet_index.csv 里的，
+    而那个文件是生成物，跑一次 build_index_map.py 就没了。
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.trans = load_translations()
+        with open(CSV_PATH, encoding="utf-8-sig", newline="") as fh:
+            cls.rows = {r["index"]: r for r in csv.DictReader(fh) if r.get("index", "").strip()}
+        cls.md = read_text(MD_PATH)
+
+    def test_file_exists_and_is_wellformed(self):
+        self.assertTrue(os.path.exists(TRANS_PATH),
+                        f"缺少 {os.path.basename(TRANS_PATH)}")
+        self.assertIn("planets", self.trans)
+        self.assertIn("sectors", self.trans)
+
+    def test_every_planet_translation_reaches_the_csv(self):
+        for index, zh in self.trans["planets"].items():
+            self.assertIn(index, self.rows, f"CSV 里没有 index={index}")
+            self.assertEqual(self.rows[index]["name_zh"], zh,
+                             f"index={index} 的中文名在 CSV 里丢了")
+
+    def test_every_sector_translation_reaches_the_csv(self):
+        for sector, zh in self.trans["sectors"].items():
+            matched = [r for r in self.rows.values() if r["sector"] == sector]
+            self.assertTrue(matched, f"CSV 里没有星区 {sector}")
+            for r in matched:
+                self.assertEqual(r["sector_zh"], zh,
+                                 f"星区 {sector} 的中文名在 CSV 里丢了")
+
+    def test_translations_reach_the_markdown(self):
+        for zh in self.trans["planets"].values():
+            self.assertIn(zh, self.md, f"INDEX_MAP.md 里没有星球译名 {zh}")
+        for zh in self.trans["sectors"].values():
+            self.assertIn(zh, self.md, f"INDEX_MAP.md 里没有星区译名 {zh}")
+
+    def test_untranslated_entries_are_blank_not_invented(self):
+        """没填的项留空，不要拿英文名顶替——否则看不出哪些还没翻译。"""
+        untranslated = [i for i in self.rows if i not in self.trans["planets"]]
+        self.assertTrue(untranslated, "所有星球都已翻译？那这条断言可以删掉")
+        for index in untranslated[:20]:
+            self.assertEqual(self.rows[index]["name_zh"], "",
+                             f"index={index} 没翻译，name_zh 应当留空")
+
+    def test_translations_are_not_written_into_reference_json(self):
+        """reference.json 是 refresh_reference.py 的产物，手工译名不能混进去。"""
+        doc = json.loads(read_text(REF_PATH))
+        for index in self.trans["planets"]:
+            entry = doc["planets"].get(index, {})
+            self.assertNotIn("name_zh", entry,
+                             "译名混进了 reference.json，重新生成参照表时会丢")
+
+
 class TestIndexMapCompleteness(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.doc = json.loads(read_text(REF_PATH))
+        cls.trans = load_translations()
         cls.planets = cls.doc["planets"]
         cls.sectors = cls.doc["sectors"]
         cls.md = read_text(MD_PATH)
@@ -121,12 +182,14 @@ class TestIndexMapCompleteness(unittest.TestCase):
 
     def test_sector_membership_matches_reference(self):
         """星区 -> 星球 的列表要和 reference.json 一致。"""
+        sector_zh = self.trans["sectors"]
         for name, sec in self.sectors.items():
             expected = ", ".join(
                 f"{i} {self.planets[str(i)]['name']}"
                 for i in sec["planets"] if str(i) in self.planets
             )
-            row = f"| **{name}** | {len(sec['planets'])} | {expected} |"
+            row = (f"| **{name}** | {sector_zh.get(name) or '—'} | "
+                   f"{len(sec['planets'])} | {expected} |")
             self.assertIn(row, self.md, f"星区 {name} 的成员行对不上；{HINT}")
 
 

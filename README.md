@@ -143,7 +143,7 @@ python -m hd2api dump --out snap.json        # 导出完整快照
 
 ```bash
 python -m unittest discover -s tests -t tests
-# 187 项：归一化 58 + 标准库 Web 层 45 + FastAPI 14 + 可读文本 47 + 术语 10 + 对照表 13
+# 237 项：归一化 58 + 标准库 Web 层 45 + FastAPI 14 + 可读文本 47 + QQ 机器人 44 + 术语 10 + 对照表 19
 ```
 
 **全部离线**——测试用夹具喂数据，不碰网络。
@@ -324,6 +324,31 @@ The Helldivers recaptured CHARBAL-VII, by the Cyborgs retained hold of ZZANIAH P
 ```bash
 python tests/test_textview.py           # 47 项，逐字比对文档的两套示例
 python research/verify_text_modes.py    # 起服务后核对真实输出（会自动找一颗正在防御的星球）
+```
+
+---
+
+## 3.6 QQ 机器人
+
+`bot/` 下是一个把本 API 接到 QQ 的机器人（基于 [botpy](https://github.com/tencent-connect/botpy/)）。
+功能规格见 [`qqbot.md`](qqbot.md)，用法见 [`bot/README.md`](bot/README.md)。
+
+```bash
+python run.py            # 先起 API
+python bot/qqbot.py      # 再起机器人
+```
+
+| 命令 | 说明 |
+|---|---|
+| `/p` `/planet` `<星球名或index>` | 单颗星球战报（`?mode=md`） |
+| `/d` `/dispatch` | 最新一条游戏内快讯（`?mode=md`） |
+| `/t` `/trending` | 在线绝地潜兵最多的 5 颗星球 |
+
+支持 QQ 的**频道 / 频道私信 / QQ群 / QQ私聊**四类消息。凭据放
+`bot/config.yaml`（已 gitignore）或用环境变量 `QQBOT_APPID` / `QQBOT_SECRET`。
+
+```bash
+python tests/test_qqbot.py       # 44 项，离线逻辑 + 对着真实 API 的端到端
 ```
 
 ---
@@ -657,12 +682,21 @@ helldiversbot/
 ├── run.py                        一键启动（--fastapi 切换前端）
 ├── INDEX_MAP.md                  ★ index 对照表（给人看的，生成物）
 ├── planet_index.csv              ★ 同上，机器可读（Excel 直接打开）
+├── qqbot.md                      QQ 机器人的功能规格
+├── bot/                          QQ 机器人（基于 botpy）
+│   ├── qqbot.py                  入口：四类消息事件的接线
+│   ├── commands.py               命令解析与回复生成（不依赖 botpy，可单测）
+│   ├── hd2_api.py                战报 API 的异步客户端
+│   ├── config.example.yaml       配置模板（真凭据放 config.yaml，已 gitignore）
+│   └── README.md                 机器人用法
 ├── data/
 │   ├── reference.json            静态参照表（273 星球 / 56 星区 / 生物群系 / 区域名）
+│   ├── translations_zh.json      星球与星区的中文译名（**手写**，不会被覆盖）
 │   └── effects.json              效果与敌人变种名称（402 条）
 ├── scripts/
 │   ├── refresh_reference.py      重建/校验参照表
 │   ├── build_index_map.py        生成根目录的 INDEX_MAP.md 与 planet_index.csv
+│   ├── extract_translations.py   把 CSV 里手填的中文名抢救进 translations_zh.json
 │   └── vendor_deps.py            绕开 pip 装 FastAPI 到 .deps/
 ├── hd2api/
 │   ├── config.py                 配置（全部可用环境变量覆盖）
@@ -681,8 +715,9 @@ helldiversbot/
 │   ├── test_web.py               45 项标准库 Web 层测试（真起 HTTP 服务）
 │   ├── test_asgi.py              14 项 FastAPI 测试（纯 stdlib ASGI 调用，不需要 httpx）
 │   ├── test_textview.py          47 项可读文本输出测试（逐字比对 README_fancy.md 的两套示例）
+│   ├── test_qqbot.py             44 项 QQ 机器人测试（离线逻辑 + 真实 API 端到端）
 │   ├── test_terminology.py       10 项术语一致性检查
-│   └── test_index_map.py         13 项对照表同步检查
+│   └── test_index_map.py         19 项对照表同步检查 + 译名保护
 └── research/                     反向工程记录与核对脚本
 ```
 

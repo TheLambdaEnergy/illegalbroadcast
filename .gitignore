@@ -20,3 +20,10 @@ desktop.ini
 # 导出的快照
 snap.json
 *.dump.json
+
+# QQ 机器人：凭据与运行日志，绝不能入库（见 HINT.md）
+bot/config.yaml
+bot/botpy.log
+bot/*.log
+# botpy 按**当前工作目录**写日志，从根目录启动时就会落到这里
+botpy.log

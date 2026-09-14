@@ -1,0 +1,2 @@
+注意！！
+在版本发布前删除仓库中qqbot的APPID和SECRET
