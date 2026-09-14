@@ -65,7 +65,8 @@ python run.py --fastapi           # 自动把 .deps 加进 sys.path
 ```
 
 ```bash
-python tests/test_terminology.py        # 术语一致性检查（26 项里的 6 项）
+python tests/test_terminology.py        # 术语一致性检查（10 项）
+python tests/test_index_map.py          # index 对照表同步检查（13 项）
 python research/verify_terminology.py   # 起服务后看实际输出
 ```
 
@@ -142,7 +143,7 @@ python -m hd2api dump --out snap.json        # 导出完整快照
 
 ```bash
 python -m unittest discover -s tests -t tests
-# 106 项：归一化 44 项 + 标准库 Web 层 46 项 + FastAPI 前端 14 项 + 参照表完整性 2 项
+# 139 项：归一化 57 + 标准库 Web 层 45 + FastAPI 14 + 术语 10 + 对照表 13
 ```
 
 **全部离线**——测试用夹具喂数据，不碰网络。
@@ -360,6 +361,37 @@ python scripts/refresh_reference.py --check  # 只校验现有文件是否仍与
 
 参照表是**一次性快照**——服务运行时**完全不会访问**它的来源。
 
+### 根目录的 index 对照表
+
+`data/reference.json` 是给程序读的；给人翻的版本在**项目根目录**：
+
+| 文件 | 用途 |
+|---|---|
+| `INDEX_MAP.md` | 星球 index 对照表、星区→星球、按名称反查 index、按星区分组的 index 列表 |
+| `planet_index.csv` | 同样内容的机器可读版（utf-8-sig，Excel 双击直接打开） |
+
+```bash
+python scripts/build_index_map.py     # 改了参照表后重新生成
+```
+
+两个文件都由生成器产出，**不要手改**——`tests/test_index_map.py` 会重算一遍并逐行比对，
+不同步就直接失败。
+
+#### ⚠️ 载荷里的 `sector` 整数不是 wiki 星区
+
+这是最容易踩的坑，对照表里专门写了一节。实测：
+
+| | wiki 星区（`planets[].sector`） | 载荷里的 `sector` 整数 |
+|---|---|---|
+| 取值 | 56 个名字（Altus / Sol / Valdis …） | 53 个整数 |
+| 空间聚集度 | 紧密，成员半径中位数 **0.122** | 多数较紧，但 `sector 0` 半径 **0.926**、`sector 29` 达 1.144 |
+| 一致性 | 一一对应 | **53 个里有 36 个与星区名冲突** |
+
+`sector 0` 同时装着 Sol、Trigon、Rigel、Jin Xi、TBD 等散落全图的星球，是个兜底桶；
+而 `Trigon` 这一个星区横跨 `sector` 0 / 32 / 46 / 48 / 49 五个整数。
+
+对照表把两者分列（`星区` 与 `载荷sector`），**请按 `星区` 理解，不要拿整数当星区**。
+
 ### 效果 / 敌人变种名称（`data/effects.json`）
 
 `planetActiveEffects[].galacticEffectId` 是一串数字，而 `galacticWarEffects` 里
@@ -512,11 +544,14 @@ python research/audit_metric_coverage.py    # 需求条目逐项覆盖
 ```
 helldiversbot/
 ├── run.py                        一键启动（--fastapi 切换前端）
+├── INDEX_MAP.md                  ★ index 对照表（给人看的，生成物）
+├── planet_index.csv              ★ 同上，机器可读（Excel 直接打开）
 ├── data/
 │   ├── reference.json            静态参照表（273 星球 / 56 星区 / 生物群系 / 区域名）
 │   └── effects.json              效果与敌人变种名称（402 条）
 ├── scripts/
 │   ├── refresh_reference.py      重建/校验参照表
+│   ├── build_index_map.py        生成根目录的 INDEX_MAP.md 与 planet_index.csv
 │   └── vendor_deps.py            绕开 pip 装 FastAPI 到 .deps/
 ├── hd2api/
 │   ├── config.py                 配置（全部可用环境变量覆盖）
@@ -529,10 +564,12 @@ helldiversbot/
 │   ├── asgi.py                   FastAPI 前端（复用 web.Handlers，可选）
 │   └── __main__.py               命令行
 ├── tests/
-│   ├── fixtures.py               离线夹具（三个测试文件共用）
-│   ├── test_normalize.py         44 项归一化测试
-│   ├── test_web.py               46 项标准库 Web 层测试（真起 HTTP 服务）
-│   └── test_asgi.py              14 项 FastAPI 测试（纯 stdlib ASGI 调用，不需要 httpx）
+│   ├── fixtures.py               离线夹具（各测试文件共用）
+│   ├── test_normalize.py         57 项归一化测试
+│   ├── test_web.py               45 项标准库 Web 层测试（真起 HTTP 服务）
+│   ├── test_asgi.py              14 项 FastAPI 测试（纯 stdlib ASGI 调用，不需要 httpx）
+│   ├── test_terminology.py       10 项术语一致性检查
+│   └── test_index_map.py         13 项对照表同步检查
 └── research/                     反向工程记录与核对脚本
 ```
 

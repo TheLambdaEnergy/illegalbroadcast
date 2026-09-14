@@ -558,6 +558,12 @@ def _planet_status_block(
         # 因此单独暴露，便于按它查询。
         "settings_hash": (ref_planet or {}).get("hash") or info.get("settingsHash"),
         "sector": (ref_planet or {}).get("sector") or "Unknown",
+        # 原始载荷 warInfo.planetInfos[].sector 的整数值。**注意它和上面的 sector
+        # 不是一回事**——那是另一套更粗的空间划分，0 号还是个兜底桶。
+        # 详见根目录 INDEX_MAP.md 的说明。
+        "payload_sector": (ref_planet or {}).get("payload_sector")
+        if (ref_planet or {}).get("payload_sector") is not None
+        else info.get("sector"),
         "biome": {
             "en": biome.get("en"),
             "zh": biome.get("zh"),
@@ -1142,6 +1148,7 @@ def planet_summary(p: dict[str, Any], full: bool = False) -> dict[str, Any]:
         "index": p["index"],
         "name": p["name"],
         "sector": p["sector"],
+        "payload_sector": p.get("payload_sector"),
         "biome": (p.get("biome") or {}).get("en"),
         "biome_zh": (p.get("biome") or {}).get("zh"),
         "owner": p["owner"]["en"],

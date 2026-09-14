@@ -229,6 +229,15 @@ class TestBuildSnapshot(unittest.TestCase):
             self.assertTrue(p["name"])
             self.assertTrue(p["sector"])
 
+    def test_payload_sector_is_exposed_separately(self):
+        """载荷里的 sector 整数与 wiki 星区是两套东西，字段也分开。"""
+        p = self.by_index[1]
+        self.assertEqual(p["sector"], "Altus")
+        self.assertEqual(p["payload_sector"], 1)
+        s = planet_summary(p)
+        self.assertIn("payload_sector", s)
+        self.assertEqual(s["payload_sector"], 1)
+
     # ---------------------------------------------------------------- 指标
     def test_liberation_and_resistance(self):
         p = self.by_index[1]

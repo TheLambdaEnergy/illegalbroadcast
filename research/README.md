@@ -219,6 +219,8 @@ const s1 = { WIDOWS_HARBOR: 2768073863, NEW_HAVEN: 158585041, ..., MARS: 1893896
 | 分阵营在线人数曾严重不符 | 站点按 `enemyRace`（正在对抗的敌人）归类，不是按 `owner`；已修正 |
 | `pip install` 在本机全部失败 | pip 下载元数据时要写 `tempfile.gettempdir()`，被文件沙箱拒绝。见 `scripts/vendor_deps.py` 的绕行方案 |
 | 手动装 wheel 时装到了 `cp314t`（自由线程 ABI） | 普通构建的 CPython 导入会失败；`vendor_deps.py` 现在按 `Py_GIL_DISABLED` 过滤 ABI 标签 |
+| `warInfo.planetInfos[].sector` 被当成星区 | **不是**。它是另一套更粗的空间划分：53 个整数里 36 个与星区名冲突，`sector 0` 半径 0.926 是兜底桶。wiki 星区要按坐标聚（中位半径 0.122）。见 `research/check_sector_index.py` |
+| `data/reference.json` 里区域只有 84 颗星球有 | 正常。区域是**静态定义**，只有 211 条，恰好等于 `warInfo.planetRegions` 的 211 条；其余星球压根没有区域划分 |
 
 ## 6. 文件说明
 
@@ -261,6 +263,8 @@ const s1 = { WIDOWS_HARBOR: 2768073863, NEW_HAVEN: 158585041, ..., MARS: 1893896
 | `diagnose_rate_windows.py` | 展示相邻 15 分钟窗口的速率波动，判断差异是否只是窗口错位 |
 | `verify_both_frontends.py` | 两个前端一致性 + 人数口径交叉验证 |
 | `verify_terminology.py` | 确认译名统一后 API 的实际中文输出 |
+| `check_sector_index.py` | 排查「载荷里的 sector 整数」与 wiki 星区的对应关系（结论：不是一回事） |
+| `probe_sector_int.py` | 用坐标离散度证明 sector 整数是另一套空间划分，`sector 0` 是兜底桶 |
 | `test_endpoints_fastapi.py` | FastAPI 前端的端点检查 |
 | `test_endpoints.py` | 两个前端通用的端点检查（`--both` 一次查两个） |
 | `check_wheel_tags.py` | 诊断：检查某个包在 cpXXX/win_amd64 上有没有可用 wheel |

@@ -120,7 +120,19 @@ def http_json(url: str, timeout: int = 60):
         return json.loads(raw)
 
 
-def build(planets_raw: list, war_id: int | None) -> dict:
+def build(planets_raw: list, war_id: int | None,
+          payload_sectors: dict[int, int] | None = None) -> dict:
+    """组装参照表。
+
+    `payload_sectors` 是实时载荷里 `warInfo.planetInfos[].sector` 的
+    {planet_index: sector_int}。**注意它和 wiki 星区不是一回事**：
+      * wiki 星区（本表的 `sector` 字段）是按坐标聚出来的紧密区块，
+        中位半径 0.122，名字形如 Altus / Sol / Valdis；
+      * 载荷里的 `sector` 整数是另一套更粗的划分，而且 0 号是个兜底桶
+        （半径 0.926，横跨全图）。53 个整数里有 36 个与星区名冲突。
+    所以两者都存，字段名上区分清楚，避免混用。
+    """
+    payload_sectors = payload_sectors or {}
     factions_out = {str(k): v for k, v in FACTIONS.items()}
 
     planets_out: dict[str, dict] = {}
@@ -154,6 +166,8 @@ def build(planets_raw: list, war_id: int | None) -> dict:
             "index": p["index"],
             "name": p.get("name") or f"PLANET-{p['index']}",
             "sector": sector,
+            # 原始载荷里的 sector 整数（与 wiki 星区不同，见 build() 的说明）
+            "payload_sector": payload_sectors.get(p["index"]),
             "biome": {
                 "en": biome_name,
                 "zh": BIOME_ZH.get(biome_name, biome_name),
@@ -196,22 +210,28 @@ def cmd_refresh() -> int:
     print(f"      -> {len(planets_raw)} 颗星球")
 
     war_id = None
+    payload_sectors: dict[int, int] = {}
     try:
-        print(f"[2/2] 拉取实时载荷以记录 warId: {LIVE_SOURCE}")
+        print(f"[2/2] 拉取实时载荷以记录 warId 与载荷里的 sector 整数: {LIVE_SOURCE}")
         live = http_json(LIVE_SOURCE)
         war_id = live.get("warId")
-        print(f"      -> warId={war_id}")
+        for info in (live.get("warInfo") or {}).get("planetInfos") or []:
+            payload_sectors[int(info["index"])] = int(info.get("sector") or 0)
+        print(f"      -> warId={war_id}，planetInfos {len(payload_sectors)} 条")
     except Exception as exc:  # noqa: BLE001
-        print(f"      !! 实时载荷拉取失败（不影响参照表）: {exc}")
+        print(f"      !! 实时载荷拉取失败（不影响参照表主体）: {exc}")
 
-    doc = build(planets_raw, war_id)
+    doc = build(planets_raw, war_id, payload_sectors)
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     with open(DATA_PATH, "w", encoding="utf-8") as fh:
         json.dump(doc, fh, ensure_ascii=False, indent=1)
 
     sizes = sorted({r["size"] for p in doc["planets"].values() for r in p["regions"].values() if r["size"]})
+    groups = {p["payload_sector"] for p in doc["planets"].values() if p["payload_sector"] is not None}
     print(f"已写入 {DATA_PATH}")
     print(f"  星球 {doc['planet_count']} 颗 / 星区 {doc['sector_count']} 个 / 区域尺寸类型 {sizes}")
+    if groups:
+        print(f"  载荷里的 sector 整数取值 {len(groups)} 个（注意：与星区不是一回事）")
     return 0
 
 
