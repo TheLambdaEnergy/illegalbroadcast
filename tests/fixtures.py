@@ -309,3 +309,45 @@ def build_test_snapshot(histories=None):
     ref = make_reference()
     return build_snapshot(make_live(), ref, histories or DEFAULT_HISTORY,
                           ImpactCalibration(0.0004443, [(0.000444, 5000)] * 2))
+
+
+class AsgiHarness:
+    """按 ASGI 3.0 协议调用应用，返回 (status, headers, body)。
+
+    不依赖 httpx / TestClient，所以只装了 fastapi 也能跑。
+    """
+
+    def __init__(self, app):
+        self.app = app
+
+    def request(self, path: str, query: str = "", method: str = "GET"):
+        import asyncio
+
+        scope = {
+            "type": "http",
+            "asgi": {"version": "3.0", "spec_version": "2.3"},
+            "http_version": "1.1",
+            "method": method,
+            "scheme": "http",
+            "path": path,
+            "raw_path": path.encode(),
+            "query_string": query.encode(),
+            "root_path": "",
+            "headers": [(b"host", b"testserver"), (b"accept", b"*/*")],
+            "server": ("testserver", 80),
+            "client": ("127.0.0.1", 12345),
+        }
+        sent: list[dict] = []
+
+        async def receive():
+            return {"type": "http.request", "body": b"", "more_body": False}
+
+        async def send(message):
+            sent.append(message)
+
+        asyncio.run(self.app(scope, receive, send))
+
+        start = next(m for m in sent if m["type"] == "http.response.start")
+        body = b"".join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
+        headers = {k.decode().lower(): v.decode() for k, v in start.get("headers", [])}
+        return start["status"], headers, body

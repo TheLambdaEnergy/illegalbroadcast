@@ -194,6 +194,65 @@ if provided parameter is '?mode=pt': (default mode)
 数据获取时间：2026-09-14T01:31:44.2973993Z   // generated_at
 ```
 
+if this planet is under invasion: (planet.is_under_attack == true)
+raw data contains these params:
+```json
+"event": {
+      "id": 5692,
+      "planet_index": 262,
+      "planet_name": "K",
+      "event_type": 1,
+      "event_type_label": "防御战",
+      "event_type_label_en": "Defense",
+      "faction": {
+        "id": 3,
+        "en": "Automatons",
+        "zh": "机器人",
+        "color": "#e04545"
+      },
+      "health": 1535414,
+      "max_health": 2000000,
+      "defense_progress_percent": 23.2293,
+      "invasion_level": {
+        "current": 31,
+        "max": 40
+      },
+      "start_war_time": 81311130,
+      "expire_war_time": 81483930,
+      "started_at": "2026-09-12T21:23:12.079Z",
+      "expires_at": "2026-09-14T21:23:12.079Z",
+      "seconds_remaining": 65010,
+      "time_remaining_text": "18小时3分",
+      "duration_seconds": 172800,
+      "enemy_rate_percent_per_hour": 2.0833,
+      "required_rate_percent_per_hour": 4.2513,
+      "required_divers": 118773,
+      "predicted_outcome": "defense_will_fail",
+      "campaign_id": 51707,
+      "joint_operation_ids": [5692],
+      "potential_build_up": 0,
+      "estimated_diver_rate_percent_per_hour": 0.8787,
+      "diver_coverage_ratio": 0.2067,
+      "predicted_outcome_text": "按当前投入预计失守",
+      "diver_surplus": -94225,
+      "players": 24548
+    },
+```
+
+output:
+
+
+```plaintext
+星球名：K                     // planet.name
+分区：TRIGON                 // planet.sector 
+所属阵营：机器人             // planet.owner.zh
+已防御：23.2293%            // defense_progress_percent
+预测：失败                   // predicted_outcome_text ,失败/成功/不确定
+剩余时间：18小时3分         // time_remaining_text
+部署的绝地潜兵数：24548        // planet.players
+数据获取时间：2026-09-14T01:31:44.2973993Z   // generated_at
+```
+
 /api/v1/dispatches
 
 ```json

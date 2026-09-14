@@ -262,6 +262,7 @@ const s1 = { WIDOWS_HARBOR: 2768073863, NEW_HAVEN: 158585041, ..., MARS: 1893896
 | `compare_karlia.py` | 拿官网读到的数字与本 API 逐项对照（改 `SITE` 字典即可复用） |
 | `diagnose_rate_windows.py` | 展示相邻 15 分钟窗口的速率波动，判断差异是否只是窗口错位 |
 | `verify_both_frontends.py` | 两个前端一致性 + 人数口径交叉验证 |
+| `verify_text_modes.py` | 核对 `?mode=pt` / `?mode=md` 的真实输出是否符合 README_fancy.md |
 | `verify_terminology.py` | 确认译名统一后 API 的实际中文输出 |
 | `check_sector_index.py` | 排查「载荷里的 sector 整数」与 wiki 星区的对应关系（结论：不是一回事） |
 | `probe_sector_int.py` | 用坐标离散度证明 sector 整数是另一套空间划分，`sector 0` 是兜底桶 |

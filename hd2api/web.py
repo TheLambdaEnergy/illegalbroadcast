@@ -13,6 +13,7 @@ from . import __version__, config
 from .httpclient import FetchError
 from .normalize import planet_summary, population_history_block
 from .service import WarService
+from .textview import render_dispatch, render_planet, wants_text
 
 # --------------------------------------------------------------------------- 路由表
 class Route:
@@ -274,9 +275,12 @@ class Handlers:
             "planets": rows,
         }
 
-    def planet(self, req: Request, key: str) -> dict[str, Any]:
+    def planet(self, req: Request, key: str) -> Any:
         s = self.service.snapshot()
         p = find_planet(s, unquote(key))
+        # ?mode=pt / ?mode=md -> 可读文本；其余（含缺省）-> JSON
+        if wants_text(req):
+            return render_planet(p, s["generated_at"])
         return {"generated_at": s["generated_at"], "planet": p}
 
     def planet_history(self, req: Request, key: str) -> dict[str, Any]:
@@ -375,9 +379,12 @@ class Handlers:
             items = [m for m in items if m["is_active"]] or items[:1]
         return {"generated_at": s["generated_at"], "count": len(items), "major_orders": items}
 
-    def dispatches(self, req: Request) -> dict[str, Any]:
+    def dispatches(self, req: Request) -> Any:
         s = self.service.snapshot()
         items = list(s["dispatches"])
+        # ?mode=pt / ?mode=md -> 只输出最新一条的可读文本
+        if wants_text(req):
+            return render_dispatch(items)
         limit = req.get_int("limit", 20) or 20
         return {
             "generated_at": s["generated_at"],
@@ -481,7 +488,15 @@ def build_routes(h: Handlers) -> list[Route]:
                   "fields": "逗号分隔的字段白名单，例如 ?fields=name,players,liberation_percent",
               }),
         Route("GET", "/api/v1/planets/{key}", h.planet, "单颗星球详情",
-              "key 可以是 index（如 114）、名称（Aurora Bay 或 aurora-bay）或 settingsHash。", ("planets",)),
+              "key 可以是 index（如 114）、名称（Aurora Bay 或 aurora-bay）或 settingsHash。"
+              "加 `?mode=pt` 或 `?mode=md` 返回可读文本（见根目录 README_fancy.md）。",
+              ("planets",),
+              query={"mode": "pt / md 返回可读文本；raw 或缺省返回 JSON"}),
+        # README_fancy.md 里的示例写的是单数 /api/v1/planet/{key}，一并注册
+        Route("GET", "/api/v1/planet/{key}", h.planet, "单颗星球详情（单数别名）",
+              "与 /api/v1/planets/{key} 完全相同，为兼容 README_fancy.md 的示例路径而设。",
+              ("planets",),
+              query={"mode": "pt / md 返回可读文本；raw 或缺省返回 JSON"}),
         Route("GET", "/api/v1/planets/{key}/history", h.planet_history, "星球历史",
               "直通 CDN 的近期采样（约 15 分钟一个点），用于画曲线。", ("planets",)),
         Route("GET", "/api/v1/planets/{key}/regions", h.planet_regions, "星球区域战况",
@@ -504,7 +519,10 @@ def build_routes(h: Handlers) -> list[Route]:
               "默认只返回当前生效的指令；?all=1 返回历史全部。", ("story",),
               query={"active": "=1 只返回进行中的", "all": "=1 返回全部历史"}),
         Route("GET", "/api/v1/dispatches", h.dispatches, "游戏内快讯",
-              "已剥离 <i=N> 富文本标记的原文。", ("story",), query={"limit": "默认 20"}),
+              "已剥离 <i=N> 富文本标记的原文。"
+              "加 `?mode=pt` 或 `?mode=md` 只返回最新一条的可读文本。", ("story",),
+              query={"limit": "默认 20",
+                     "mode": "pt / md 只返回最新一条的可读文本；raw 或缺省返回 JSON"}),
 
         Route("GET", "/api/v1/news", h.news, "Steam 新闻", "官方公告与更新日志。", ("story",),
               query={"limit": "默认 20"}),

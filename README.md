@@ -143,7 +143,7 @@ python -m hd2api dump --out snap.json        # 导出完整快照
 
 ```bash
 python -m unittest discover -s tests -t tests
-# 139 项：归一化 57 + 标准库 Web 层 45 + FastAPI 14 + 术语 10 + 对照表 13
+# 187 项：归一化 58 + 标准库 Web 层 45 + FastAPI 14 + 可读文本 47 + 术语 10 + 对照表 13
 ```
 
 **全部离线**——测试用夹具喂数据，不碰网络。
@@ -213,6 +213,117 @@ curl "http://127.0.0.1:8808/api/v1/defenses?outcome=defense_will_fail"
 
 # 终结族控制下的星球，按解放度排序
 curl "http://127.0.0.1:8808/api/v1/planets?owner=terminids&sort=liberation&compact=1"
+```
+
+---
+
+## 3.5 可读文本输出（`?mode=pt` / `?mode=md`）
+
+**只有两个端点支持**（规格见根目录 `README_fancy.md`）：
+
+| 端点 | `?mode=pt` / `?mode=md` 的输出 |
+|---|---|
+| `GET /api/v1/planets/{key}`（也认文档里的单数 `/api/v1/planet/{key}`） | 星球摘要，**按是否处于防御战自动切换版式** |
+| `GET /api/v1/dispatches` | 只输出**最新一条**快讯 |
+
+### 版式一：解放战役（7 行）
+
+```bash
+curl "http://127.0.0.1:8808/api/v1/planet/KARLIA?mode=pt"
+```
+
+```plaintext
+星球名：KARLIA
+分区：OMEGA
+所属阵营：光能者
+解放进度：85.6582%
+解放预计剩余时间：4天15小时
+部署的绝地潜兵数：2341
+数据获取时间：2026-09-14T03:16:56.8288321Z
+```
+
+### 版式二：防御战役 / 敌人入侵（8 行）
+
+当 `planet.is_under_attack == true` 时自动切换：
+
+```bash
+curl "http://127.0.0.1:8808/api/v1/planet/BEKVAM%20III?mode=pt"
+```
+
+```plaintext
+星球名：BEKVAM III
+分区：NANOS
+所属阵营：机器人
+已防御：6.2535%
+预测：失败
+剩余时间：15小时59分
+部署的绝地潜兵数：12937
+数据获取时间：2026-09-14T03:16:56.8288321Z
+```
+
+字段映射：
+
+| 输出行 | 来源 |
+|---|---|
+| `已防御` | `event.defense_progress_percent` |
+| `预测` | `event.predicted_outcome` → **成功 / 失败 / 不确定** |
+| `剩余时间` | `event.time_remaining_text` |
+
+`预测` 只允许三个值：
+
+| `event.predicted_outcome` | 输出 |
+|---|---|
+| `defense_will_hold` | 成功 |
+| `defense_will_fail` | 失败 |
+| `too_close_to_call` | 不确定 |
+| `unknown` / `null` / 其它 | 不确定 |
+
+> ⚠️ **防御战里的 `所属阵营` 是入侵方，不是星球占有者。**
+> 上面 BEKVAM III 的 `owner.zh` 其实是**超级地球**（是我们的星球在挨打），
+> 输出的却是入侵方**机器人**（`event.faction.zh`）。这与文档示例一致——
+> 文档里 K 的 owner 同样是超级地球，写的却是「机器人」。
+
+### 版式三：游戏内快讯（只输出最新一条）
+
+```bash
+curl "http://127.0.0.1:8808/api/v1/dispatches?mode=pt"
+```
+
+```plaintext
+时间：2026-09-13T12:07:20.895Z
+信息：MAJOR ORDER FAILED
+
+The Helldivers recaptured CHARBAL-VII, by the Cyborgs retained hold of ZZANIAH PRIME. 
+...
+```
+
+### 参数取值
+
+| `?mode=` | 行为 |
+|---|---|
+| 省略 / 其它值 | **返回 JSON**（默认不变，向后兼容） |
+| `pt` | 返回纯文本 |
+| `md` | 同 `pt`（两个名字等价） |
+| `raw` | 返回 JSON（显式声明） |
+
+其它端点即使带上 `mode` 也照常返回 JSON——`mode` 只对上面两个端点生效。
+
+### 与文档示例的三处差异（实现时的判断）
+
+1. **没有输出 `// planet.name` 这类行尾注释。** 它们是文档作者标注的**字段来源**，不是输出内容。
+   证据：`数据获取时间` 那行标的是 `generated_at`，但示例值 `2026-09-14T01:31:44.2973993Z`
+   恰好等于同一份 JSON 里的 `liberation_rate.measured.to`，而 `generated_at` 是 `01:56:34.677Z`
+   —— 说明注释是凭记忆手写的。
+2. **`数据获取时间` 跟示例值走**：优先用实测窗口的结束时刻（`liberation_rate.measured.to`，
+   那才是「数据是什么时候的」），没有实测时才退回 `generated_at`。
+3. **`信息` 里的换行是真实换行**，不是字面量 `\n`。JSON 里 `"a\n\nb"` 本来就是真换行，
+   输出成多行更易读。
+
+空值统一渲染成 `—`（例如已解放星球的 `解放预计剩余时间`）。
+
+```bash
+python tests/test_textview.py           # 47 项，逐字比对文档的两套示例
+python research/verify_text_modes.py    # 起服务后核对真实输出（会自动找一颗正在防御的星球）
 ```
 
 ---
@@ -559,15 +670,17 @@ helldiversbot/
 │   ├── sources.py                上游接口封装
 │   ├── reference.py              参照表查询 + 阵营枚举 + 效果名解析
 │   ├── normalize.py              ★ 核心：ID→文本、派生指标、快照组装
+│   ├── textview.py               `?mode=pt` / `?mode=md` 的可读文本渲染（见 README_fancy.md）
 │   ├── service.py                TTL 缓存 + 后台轮询 + 自动标定
 │   ├── web.py                    路由 + 查询过滤 + OpenAPI + 文档页（标准库前端）
 │   ├── asgi.py                   FastAPI 前端（复用 web.Handlers，可选）
 │   └── __main__.py               命令行
 ├── tests/
 │   ├── fixtures.py               离线夹具（各测试文件共用）
-│   ├── test_normalize.py         57 项归一化测试
+│   ├── test_normalize.py         58 项归一化测试
 │   ├── test_web.py               45 项标准库 Web 层测试（真起 HTTP 服务）
 │   ├── test_asgi.py              14 项 FastAPI 测试（纯 stdlib ASGI 调用，不需要 httpx）
+│   ├── test_textview.py          47 项可读文本输出测试（逐字比对 README_fancy.md 的两套示例）
 │   ├── test_terminology.py       10 项术语一致性检查
 │   └── test_index_map.py         13 项对照表同步检查
 └── research/                     反向工程记录与核对脚本
