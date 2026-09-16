@@ -1,0 +1,15 @@
+# QQ 机器人的依赖
+#
+#   python -m venv .venv && source .venv/bin/activate
+#   pip install -r bot/requirements.txt
+#
+# ⚠️ 包名很容易打错，认准 `qq-botpy-v2`：
+#
+#   qq-botpy-v2   ← 就是本文件要装的这个（导入名仍是 botpy）
+#   qqbot-py-v2   ← ✗ 不存在，PyPI 上 404
+#   qq-botpy      ← ✗ 腾讯官方原版，是另一个库，不保证有 QQ群 / C2C 那套 v2 接口
+#   qqbot         ← ✗ 完全无关的老项目（SmartQQ）
+#
+# 1.0.2 是已验证版本；放宽上限是为了拿到后续修 bug 的补丁版。
+
+qq-botpy-v2>=1.0.2,<2.0

@@ -32,6 +32,8 @@ from commands import (  # noqa: E402
 from hd2_api import Hd2ApiError, Hd2Client  # noqa: E402
 
 API_BASE = os.environ.get("QQBOT_API_BASE", "http://127.0.0.1:8808")
+#: 设成 1 时，API 连不上就**失败**而不是跳过。CI / 部署验证时用。
+REQUIRE_LIVE = os.environ.get("QQBOT_REQUIRE_LIVE", "") not in ("", "0", "false")
 
 
 def api_alive() -> bool:
@@ -42,7 +44,33 @@ def api_alive() -> bool:
         return False
 
 
-requires_api = unittest.skipUnless(api_alive(), f"战报 API 未运行（{API_BASE}）")
+API_UP = api_alive()
+
+# 连不上 API 时不能静悄悄地跳过 —— 否则测试报告照样是 OK，
+# 而真正验证端到端流程的那批用例一项都没跑。这里明确喊出来。
+if not API_UP:
+    _msg = (
+        "\n" + "=" * 78 + "\n"
+        f"[!] 战报 API 连不上（{API_BASE}），端到端用例将被跳过。\n"
+        "    先启动它：python run.py\n"
+        "    想让它直接判失败（CI / 部署验证）：设 QQBOT_REQUIRE_LIVE=1\n"
+        + "=" * 78
+    )
+    print(_msg, file=sys.stderr)
+
+requires_api = unittest.skipUnless(
+    API_UP,
+    f"战报 API 未运行（{API_BASE}）；先跑 python run.py，或设 QQBOT_REQUIRE_LIVE=1 让它失败",
+)
+
+# 显式要求时必须真跑，不能跳过
+if REQUIRE_LIVE and not API_UP:
+    class TestLiveApiRequired(unittest.TestCase):
+        def test_api_must_be_running(self):
+            self.fail(
+                f"QQBOT_REQUIRE_LIVE=1，但 {API_BASE} 连不上。\n"
+                "请先启动战报 API：python run.py"
+            )
 
 
 class FakeClient:
@@ -427,6 +455,74 @@ class TestAgainstLiveApi(unittest.TestCase):
         with self.assertRaises(Hd2ApiError) as ctx:
             asyncio.run(body())
         self.assertIn("python run.py", ctx.exception.message)
+
+
+class TestBotRequirements(unittest.TestCase):
+    """依赖清单里的包名必须对。
+
+    这条是有来历的：在远程服务器上很自然地会打成 `qqbot-py-v2`，
+    但那个名字在 PyPI 上根本不存在（404）；而 `qq-botpy` / `qqbot`
+    是两个完全不同的库，装错了 `import botpy` 能过但接口对不上。
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        with open(os.path.join(ROOT, "bot", "requirements.txt"), encoding="utf-8") as fh:
+            cls.text = fh.read()
+        cls.install_lines = [
+            ln.strip() for ln in cls.text.splitlines()
+            if ln.strip() and not ln.strip().startswith("#")
+        ]
+
+    def test_requires_the_v2_package(self):
+        self.assertTrue(
+            any(ln.startswith("qq-botpy-v2") for ln in self.install_lines),
+            f"requirements 里没有 qq-botpy-v2：{self.install_lines}")
+
+    def test_does_not_pin_the_wrong_packages(self):
+        for wrong in ("qqbot-py-v2", "qq-botpy", "qqbot", "botpy"):
+            for ln in self.install_lines:
+                if ln.startswith("qq-botpy-v2"):
+                    continue
+                self.assertFalse(ln.startswith(wrong),
+                                 f"requirements 里出现了错误的包名 {wrong!r}：{ln}")
+
+    def test_warns_about_the_similar_names(self):
+        """注释里要提醒一下容易混的名字。"""
+        self.assertIn("qq-botpy", self.text)
+        self.assertIn("qqbot-py-v2", self.text)
+
+
+class TestBotConfigTemplate(unittest.TestCase):
+    """config.example.yaml 是入库的模板，绝不能带真实凭据。"""
+
+    @classmethod
+    def setUpClass(cls):
+        path = os.path.join(ROOT, "bot", "config.example.yaml")
+        with open(path, encoding="utf-8") as fh:
+            cls.text = fh.read()
+        sys.path.insert(0, os.path.join(ROOT, "bot"))
+        import qqbot
+        cls.cfg = qqbot.load_config(path)
+
+    def test_credentials_are_empty(self):
+        self.assertEqual(self.cfg.get("appid"), "", "模板里不该有真实 appid")
+        self.assertEqual(self.cfg.get("secret"), "", "模板里不该有真实 secret")
+
+    def test_rejects_placeholder_text(self):
+        """不许用「你的APPID」这类占位符——空串才能被启动检查识别出来。"""
+        self.assertNotIn("你的", self.text)
+
+    def test_defaults_are_filled(self):
+        self.assertTrue(str(self.cfg["api_base"]).startswith("http"))
+        self.assertGreater(int(self.cfg["max_reply_chars"]), 0)
+        self.assertGreater(float(self.cfg["http_timeout"]), 0)
+
+    def test_real_config_is_gitignored(self):
+        with open(os.path.join(ROOT, ".gitignore"), encoding="utf-8") as fh:
+            gi = fh.read()
+        self.assertIn("bot/config.yaml", gi)
+        self.assertIn("botpy.log", gi)
 
 
 if __name__ == "__main__":

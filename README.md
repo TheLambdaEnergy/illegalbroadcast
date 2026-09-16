@@ -143,10 +143,18 @@ python -m hd2api dump --out snap.json        # 导出完整快照
 
 ```bash
 python -m unittest discover -s tests -t tests
-# 237 项：归一化 58 + 标准库 Web 层 45 + FastAPI 14 + 可读文本 47 + QQ 机器人 44 + 术语 10 + 对照表 19
+# 259 项：归一化 58 + 标准库 Web 层 45 + FastAPI 14 + 可读文本 58 + QQ 机器人 55 + 术语 10 + 对照表 19
 ```
 
-**全部离线**——测试用夹具喂数据，不碰网络。
+**默认全部离线**——测试用夹具喂数据，不碰网络。
+
+唯一的例外是 `test_qqbot.py` 里 11 项端到端用例，它们会真的去请求本机战报 API。
+API 没起时这些用例会被跳过，同时往 stderr 打一条醒目警告（不再静默通过）；
+想让它们直接判失败（CI / 部署验证），设 `QQBOT_REQUIRE_LIVE=1`。
+
+```bash
+python research/run_all_tests.py   # 全量跑并附按模块统计表（pwsh 里管道被沙箱拦，用它代替）
+```
 
 ### 逐条核对需求覆盖
 
@@ -731,8 +739,8 @@ helldiversbot/
 │   ├── test_normalize.py         58 项归一化测试
 │   ├── test_web.py               45 项标准库 Web 层测试（真起 HTTP 服务）
 │   ├── test_asgi.py              14 项 FastAPI 测试（纯 stdlib ASGI 调用，不需要 httpx）
-│   ├── test_textview.py          47 项可读文本输出测试（逐字比对 README_fancy.md 的两套示例）
-│   ├── test_qqbot.py             44 项 QQ 机器人测试（离线逻辑 + 真实 API 端到端）
+│   ├── test_textview.py          58 项可读文本输出测试（逐字比对 README_fancy.md 的两套示例）
+│   ├── test_qqbot.py             55 项 QQ 机器人测试（离线逻辑 + 真实 API 端到端）
 │   ├── test_terminology.py       10 项术语一致性检查
 │   └── test_index_map.py         19 项对照表同步检查 + 译名保护
 └── research/                     反向工程记录与核对脚本
