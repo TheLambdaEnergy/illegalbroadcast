@@ -29,14 +29,23 @@ COMMAND_ALIASES: dict[str, str] = {
 }
 
 USAGE = """\
-用法：
-/p <星球名或编号>　查单颗星球，如 /p BEKVAM III、/p 262
-/d　最新一条游戏内快讯
-/t　在线绝地潜兵最多的星球
+/p 或 /planet <星球名/星球索引> : 获取星球数据
+/d 或 /dispatch : 获取当前的战役新闻
+/t 或 /trending : 获取当前热门星球
+/help : 显示此帮助信息
 
-私聊直接发命令；群聊里 @机器人 再加命令。"""
+示例：
+/p CYBERSTAN 显示生化斯坦的详细信息
+/planet 0 显示超级地球的详细信息"""
 
-HELP_HINT = "发送 /help 查看用法。"
+#: 解析不出命令或参数时统一回这句（规格来自 qqbot.md）
+UNKNOWN_INPUT = "未知的参数或命令。请使用/help查看相关帮助"
+
+#: `/p` 缺参数时给更具体的提示——这是「少给」而不是「给错」
+MISSING_PLANET_ARG = "请给出星球名或编号，例如 `/p BEKVAM III`、`/p 262`。"
+
+#: 这几个命令不接受参数。`/help` 不在此列——`/help anything` 照常显示帮助更友好。
+NO_ARG_COMMANDS = frozenset({"dispatch", "trending"})
 
 # 频道/群里 @机器人 时，正文前面会带上 <@!1234> 这样的 mention 标记
 _MENTION_RE = re.compile(r"^\s*(?:<@!?\w+>\s*)+")
@@ -96,7 +105,7 @@ def format_trending(planets: list[dict[str, Any]], totals: dict[str, Any] | None
     直接显示 `liberation_percent` 会让防御中的己方星球永远是 100%。
     """
     if not planets:
-        return "暂时拿不到星球数据。" + HELP_HINT
+        return "暂时拿不到星球数据。"
 
     total_online = (totals or {}).get("players_online")
     head = f"🔥 在线绝地潜兵最多的 {min(limit, len(planets))} 颗星球"
@@ -131,17 +140,25 @@ async def execute_command(
     max_reply_chars: int = 900,
     trending_limit: int = DEFAULT_TRENDING_LIMIT,
 ) -> str:
-    """把一条消息变成一句回复文本。任何异常都会变成可读的中文提示。"""
+    """把一条消息变成一句回复文本。任何异常都会变成可读的中文提示。
+
+    解析不出命令、或给不接受参数的命令塞了参数，都回 `UNKNOWN_INPUT`；
+    `/p` 少给参数则给更具体的提示。
+    """
     cmd = parse_command(content)
     if cmd is None:
-        return USAGE
+        return UNKNOWN_INPUT
     if cmd.name in ("help", "unknown"):
-        return USAGE
+        # 未知命令回错误提示；/help 本身回帮助
+        return USAGE if cmd.name == "help" else UNKNOWN_INPUT
+    if cmd.name in NO_ARG_COMMANDS and cmd.arg:
+        # /d /t /help 不接受参数，给了就是未知参数
+        return UNKNOWN_INPUT
 
     try:
         if cmd.name == "planet":
             if not cmd.arg:
-                return "请给出星球名或编号，例如 `/p BEKVAM III`、`/p 262`。"
+                return MISSING_PLANET_ARG
             return truncate(await client.planet_text(cmd.arg), max_reply_chars)
 
         if cmd.name == "dispatch":
@@ -156,4 +173,4 @@ async def execute_command(
     except Hd2ApiError as exc:
         return exc.message
 
-    return USAGE
+    return UNKNOWN_INPUT

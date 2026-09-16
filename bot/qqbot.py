@@ -159,9 +159,9 @@ def build_client(cfg: dict) -> HelldiversClient:
 def main(argv: list[str] | None = None) -> int:
     cfg = load_config()
     appid, secret = cfg.get("appid"), cfg.get("secret")
-    if not appid or not secret or str(appid).startswith("你的"):
-        _log.error("缺少 appid/secret。请复制 config.example.yaml 为 config.yaml 并填写，"
-                   "或设置环境变量 QQBOT_APPID / QQBOT_SECRET。")
+    if not appid or not secret:
+        _log.error("缺少 appid/secret。请复制 bot/config.example.yaml 为 bot/config.yaml "
+                   "并填写，或设置环境变量 QQBOT_APPID / QQBOT_SECRET。")
         return 1
 
     client = build_client(cfg)

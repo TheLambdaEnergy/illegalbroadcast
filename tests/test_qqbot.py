@@ -20,6 +20,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "bot"))
 
 from commands import (  # noqa: E402
+    MISSING_PLANET_ARG,
+    UNKNOWN_INPUT,
     USAGE,
     execute_command,
     format_trending,
@@ -205,9 +207,10 @@ class TestExecuteCommand(unittest.TestCase):
         self.assertEqual(c.calls, [("planet", "262")])
 
     def test_planet_without_argument_shows_hint(self):
+        """少给参数 -> 更具体的提示（不是「未知参数」）。"""
         c = FakeClient()
         out = run(execute_command("/p", c))
-        self.assertIn("/p BEKVAM III", out)
+        self.assertEqual(out, MISSING_PLANET_ARG)
         self.assertEqual(c.calls, [])
 
     def test_dispatch(self):
@@ -215,9 +218,18 @@ class TestExecuteCommand(unittest.TestCase):
         out = run(execute_command("/d", c))
         self.assertEqual(out, "信息：MAJOR ORDER FAILED")
 
-    def test_dispatch_ignores_extra_argument(self):
-        c = FakeClient(dispatch="X")
-        self.assertEqual(run(execute_command("/d whatever", c)), "X")
+    def test_no_arg_command_rejects_extra_argument(self):
+        """/d /t 不接受参数，给了就是「未知参数」。"""
+        for text in ("/d whatever", "/dispatch 123", "/t 5", "/trending x"):
+            c = FakeClient()
+            self.assertEqual(run(execute_command(text, c)), UNKNOWN_INPUT, text)
+            self.assertEqual(c.calls, [], f"{text} 不该真的去请求 API")
+
+    def test_help_with_extra_argument_still_shows_help(self):
+        """/help 不吃参数这个概念 —— 多给点东西也照常显示帮助。"""
+        c = FakeClient()
+        self.assertEqual(run(execute_command("/help me", c)), USAGE)
+        self.assertEqual(c.calls, [])
 
     def test_trending(self):
         c = FakeClient(trending={"planets": [TestFormatTrending.LIB],
@@ -226,15 +238,32 @@ class TestExecuteCommand(unittest.TestCase):
         self.assertIn("BRILLIANCE", out)
         self.assertIn("1,234", out)
 
-    def test_help_and_unknown(self):
+    def test_help_returns_documented_message(self):
         c = FakeClient()
         self.assertEqual(run(execute_command("/help", c)), USAGE)
-        self.assertEqual(run(execute_command("/zzz", c)), USAGE)
+        self.assertEqual(run(execute_command("/h", c)), USAGE)
         self.assertEqual(c.calls, [])
 
-    def test_non_command_shows_usage(self):
+    def test_help_message_matches_qqbot_md(self):
+        """帮助文案以 qqbot.md 里写的那段为准。"""
+        with open(os.path.join(ROOT, "qqbot.md"), encoding="utf-8") as fh:
+            doc = fh.read()
+        self.assertIn(USAGE, doc, "commands.USAGE 与 qqbot.md 的 Help Message 不一致")
+
+    def test_unknown_command_shows_unknown_message(self):
         c = FakeClient()
-        self.assertEqual(run(execute_command("你好", c)), USAGE)
+        for text in ("/zzz", "/xyz abc", "/foo"):
+            self.assertEqual(run(execute_command(text, c)), UNKNOWN_INPUT, text)
+        self.assertEqual(c.calls, [])
+
+    def test_non_command_shows_unknown_message(self):
+        c = FakeClient()
+        for text in ("你好", "hello", "/", "随便说点什么"):
+            self.assertEqual(run(execute_command(text, c)), UNKNOWN_INPUT, text)
+
+    def test_unknown_message_wording(self):
+        self.assertEqual(UNKNOWN_INPUT, "未知的参数或命令。请使用/help查看相关帮助")
+        self.assertIn("/help", UNKNOWN_INPUT)
 
     def test_api_error_becomes_readable_text(self):
         c = FakeClient(error=Hd2ApiError("没有找到这个星球。", status=404))

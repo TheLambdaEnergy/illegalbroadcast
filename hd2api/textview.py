@@ -32,7 +32,14 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
 from typing import Any
+
+# 输出里的时间统一用北京时间。
+# 固定 +8 偏移而不是 zoneinfo("Asia/Shanghai")：中国自 1991 年起不再实行夏令时，
+# 固定偏移结果一致，还省掉 Windows 上可能缺失的 IANA 时区数据库依赖。
+BEIJING_TZ = timezone(timedelta(hours=8))
+TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 # 文档里的注释只是标注来源，不是输出的一部分
 TEXT_MODES = frozenset({"pt", "md"})
@@ -73,8 +80,31 @@ def _text(value: Any) -> str:
     return text or _NULL
 
 
+def beijing_time(value: Any) -> str:
+    """把 ISO 8601 时间戳转成北京时间，精确到秒。
+
+    上游给的是带 7 位小数秒的 UTC（如 `2026-09-14T03:16:56.8288321Z`），
+    直接摆给用户看既啰嗦又不在一个时区上。转成 `2026-09-14 11:16:56`。
+
+    解析不了就原样返回，不编造时间。
+    """
+    if value is None:
+        return _NULL
+    raw = str(value).strip()
+    if not raw:
+        return _NULL
+    try:
+        dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return raw
+    if dt.tzinfo is None:
+        # 没有时区信息就当作 UTC —— 上游给的一律是 UTC
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(BEIJING_TZ).strftime(TIME_FORMAT)
+
+
 def data_timestamp(planet: dict[str, Any], generated_at: str | None) -> str:
-    """`数据获取时间` 用哪个时间戳。
+    """`数据获取时间` 用哪个时间戳（已格式化为北京时间）。
 
     文档的注释写的是 `generated_at`，但示例值 `2026-09-14T01:31:44.2973993Z`
     恰好等于同一份 JSON 里 `liberation_rate.measured.to`，而 `generated_at`
@@ -82,7 +112,7 @@ def data_timestamp(planet: dict[str, Any], generated_at: str | None) -> str:
     （那才是「数据是什么时候的」），没有实测时退回 `generated_at`。
     """
     measured = (planet.get("liberation_rate") or {}).get("measured") or {}
-    return _text(measured.get("to") or generated_at)
+    return beijing_time(measured.get("to") or generated_at)
 
 
 def outcome_label(event: dict[str, Any]) -> str:
@@ -172,4 +202,5 @@ def render_dispatch(dispatches: list[dict[str, Any]]) -> str:
     if item is None:
         return f"时间：{_NULL}\n信息：（暂无快讯）\n"
     # message 里的换行是真实换行（JSON 里是转义的 \n），原样输出更易读
-    return f"时间：{_text(item.get('published_at'))}\n信息：{_text(item.get('message'))}\n"
+    return (f"时间：{beijing_time(item.get('published_at'))}\n"
+            f"信息：{_text(item.get('message'))}\n")

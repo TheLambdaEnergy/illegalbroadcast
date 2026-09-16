@@ -26,6 +26,7 @@ if os.path.isdir(_DEPS) and _DEPS not in sys.path:
 
 from fixtures import AsgiHarness, StubService  # noqa: E402
 from hd2api.textview import (  # noqa: E402
+    beijing_time,
     data_timestamp,
     is_defense,
     latest_dispatch,
@@ -54,7 +55,7 @@ DOC_PLANET_TEXT = """\
 解放进度：85.448%
 解放预计剩余时间：6天1小时
 部署的绝地潜兵数：2606
-数据获取时间：2026-09-14T01:31:44.2973993Z
+数据获取时间：2026-09-14 09:31:44
 """
 
 # README_fancy.md 里的防御战示例（planet 块按真实数据补全：K 的 owner 是超级地球，
@@ -89,7 +90,7 @@ DOC_DEFENSE_TEXT = """\
 预测：失败
 剩余时间：18小时3分
 部署的绝地潜兵数：24548
-数据获取时间：2026-09-14T01:31:44.2973993Z
+数据获取时间：2026-09-14 09:31:44
 """
 
 
@@ -232,20 +233,71 @@ class TestRenderDefensePlanet(unittest.TestCase):
         self.assertFalse(is_defense(KARLIA))
 
 
+class TestBeijingTime(unittest.TestCase):
+    """时间统一格式化成北京时间、精确到秒。"""
+
+    def test_utc_to_beijing(self):
+        # 上游给的是带 7 位小数秒的 UTC
+        self.assertEqual(beijing_time("2026-09-14T03:16:56.8288321Z"),
+                         "2026-09-14 11:16:56")
+
+    def test_seconds_precision_drops_microseconds(self):
+        self.assertEqual(beijing_time("2026-09-14T03:16:56.999999Z"),
+                         "2026-09-14 11:16:56")
+
+    def test_crosses_midnight(self):
+        # UTC 17:00 -> 北京时间次日 01:00
+        self.assertEqual(beijing_time("2026-09-13T17:00:00Z"), "2026-09-14 01:00:00")
+
+    def test_crosses_month_and_year(self):
+        self.assertEqual(beijing_time("2026-12-31T16:30:00Z"), "2027-01-01 00:30:00")
+
+    def test_accepts_plus_zero_offset(self):
+        self.assertEqual(beijing_time("2026-09-14T03:16:56+00:00"),
+                         "2026-09-14 11:16:56")
+
+    def test_naive_timestamp_treated_as_utc(self):
+        self.assertEqual(beijing_time("2026-09-14T03:16:56"), "2026-09-14 11:16:56")
+
+    def test_non_utc_offset_converted(self):
+        self.assertEqual(beijing_time("2026-09-14T11:16:56+08:00"),
+                         "2026-09-14 11:16:56")
+
+    def test_unparseable_returned_as_is(self):
+        # 不编造时间：解析不了就原样吐回去
+        self.assertEqual(beijing_time("GENERATED"), "GENERATED")
+        self.assertEqual(beijing_time("not-a-time"), "not-a-time")
+
+    def test_none_and_blank(self):
+        self.assertEqual(beijing_time(None), "—")
+        self.assertEqual(beijing_time(""), "—")
+        self.assertEqual(beijing_time("   "), "—")
+
+    def test_output_shape_is_stable(self):
+        import re
+        out = beijing_time("2026-09-14T03:16:56.8288321Z")
+        self.assertRegex(out, r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$")
+
+
 class TestDataTimestamp(unittest.TestCase):
     """文档注释写 generated_at，但示例值是 measured.to —— 这里跟示例值。"""
 
     def test_prefers_measured_window_end(self):
         got = data_timestamp(KARLIA, "2026-09-14T01:56:34.677Z")
-        self.assertEqual(got, "2026-09-14T01:31:44.2973993Z")
+        self.assertEqual(got, "2026-09-14 09:31:44")
 
     def test_falls_back_to_generated_at(self):
         planet = {**KARLIA, "liberation_rate": {}}
         self.assertEqual(data_timestamp(planet, "2026-09-14T01:56:34.677Z"),
-                         "2026-09-14T01:56:34.677Z")
+                         "2026-09-14 09:56:34")
 
     def test_falls_back_when_measured_is_null(self):
         planet = {**KARLIA, "liberation_rate": {"measured": None}}
+        self.assertEqual(data_timestamp(planet, "2026-09-14T01:56:34.677Z"),
+                         "2026-09-14 09:56:34")
+
+    def test_unparseable_generated_at_passes_through(self):
+        planet = {**KARLIA, "liberation_rate": {}}
         self.assertEqual(data_timestamp(planet, "GENERATED"), "GENERATED")
 
 
